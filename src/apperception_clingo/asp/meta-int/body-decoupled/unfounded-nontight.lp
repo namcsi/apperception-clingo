@@ -4,7 +4,7 @@
 
 unfounded(R,G,T)
   :- R = static(_), time(T),
-		 rule_head(R,U), atom_subs(U,G,_),
+		 rule_head_ground(R,G),
 		 rule_body(R,UB), atom_subs(UB,GB,_),
 		 unfounded_subs(R,G,T,(V,O)): atom_subs(UB,GB,(V,O));
 		 not less(GB,G).

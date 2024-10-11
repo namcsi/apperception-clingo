@@ -38,20 +38,21 @@ class TestMeta(TestCase):
         Assert that a model's set of atoms equal a set of atoms, or unsat.
         """
         for interpreter in meta_interpreters:
-            ctl = Control(clingo_args)
-            ctl.load(str(interpreter))
-            ctl.load(str(input_file))
-            ctl.add("#defined exist/1.")
-            ctl.ground()
-            with ctl.solve(yield_=True) as handle:
-                if result is not False:
-                    expected = set(parse_term(s) for s in result)
-                    for model in handle:
-                        found = set(model.symbols(shown=True))
-                        self.assertSetEqual(found, expected)
-                    self.assertTrue(handle.get().satisfiable)
-                else:
-                    self.assertTrue(handle.get().unsatisfiable)
+            with self.subTest(interpreter=interpreter.name):
+                ctl = Control(clingo_args)
+                ctl.load(str(interpreter))
+                ctl.load(str(input_file))
+                ctl.add("#defined exist/1.")
+                ctl.ground()
+                with ctl.solve(yield_=True) as handle:
+                    if result is not False:
+                        expected = set(parse_term(s) for s in result)
+                        for model in handle:
+                            found = set(model.symbols(shown=True))
+                            self.assertSetEqual(found, expected)
+                        self.assertTrue(handle.get().satisfiable)
+                    else:
+                        self.assertTrue(handle.get().unsatisfiable)
 
     def test_static_tight(self) -> None:
         """
