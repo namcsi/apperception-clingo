@@ -1,4 +1,4 @@
-# fillname
+# apperception_clingo
 
 An example project template.
 
