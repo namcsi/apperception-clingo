@@ -27,7 +27,7 @@ type(t_sensor).
 type(t_letter).
 
 % concepts
-binary_concept(c_letter).
+concept2(c_letter).
 isa2(t_sensor,t_letter,c_letter).
 
 % Elements
@@ -37,32 +37,8 @@ object((obj_letter_a;obj_letter_b;obj_letter_c;obj_letter_d;obj_letter_e;obj_let
 isa(t_letter,
 	 (obj_letter_a;obj_letter_b;obj_letter_c;obj_letter_d;obj_letter_e;obj_letter_f)).
 
-is_time(1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17).
+time(1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17).
 
 % Every sensor has a unique letter attribute
 
 exist_constraint(c_letter).
-
-% ∃! clause for c_letter : at most one
-
-%% :-
-%% 	holds(s2(c_letter, X, Y), T),
-%% 	holds(s2(c_letter, X, Y2), T),
-%% 	Y != Y2.
-
-%% % ∃! clause for c_letter : at least one
-
-%% :-
-%% 	permanent(isa(t_sensor, X)),
-%% 	is_time(T),
-%% 	not aux_c_letter(X, T).
-
-%% aux_c_letter(X, T) :-
-%% 	holds(s2(c_letter, X, _), T).
-
-%% % Incompossibility for letter
-%% incompossible(s2(c_letter, X, Y), s2(c_letter, X, Y2)) :-
-%% 	permanent(isa(t_sensor, X)),
-%% 	permanent(isa(t_letter, Y)),
-%% 	permanent(isa(t_letter, Y2)),
-%% 	Y != Y2.

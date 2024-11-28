@@ -19,7 +19,7 @@ incompossible_set((Xor,O1,O2),s2(C,O1,O2))
 
 % extract incompossibility from exist constraint
 incompossible_set((C,O1),s2(C,O1,O2))
-  :- exist_constraint(C), isa2(T1,T2,C), object(O1), object(O2),
+  :- exist_constraint(C), concept2(C), isa2(T1,T2,C), object(O1), object(O2),
 		 isa(T1,O1), isa(T2,O2).
 
 % sanity check
