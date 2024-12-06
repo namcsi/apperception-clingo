@@ -1,0 +1,10 @@
+* Notes
+
+It seems that the truth value of external atoms are reset after a ground call.
+
+* Future Work
+
+It seems like we could use body-decoupled grounding via solving [cite:@behewo22a] to push the grounding effort of the reified rules to
+solving - I think this problem would be a good candidate.
+
+#+print_bibliography:

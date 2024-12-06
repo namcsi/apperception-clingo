@@ -1,32 +1,25 @@
-% definition of incompossibilty
-:- not holds(Y,T): incompossible_set(X,Y), incompossible_set(X,_), time(T).
--holds(Z,T) :- holds(Y,T), incompossible_set(X,Y), incompossible_set(X,Z), Y!=Z, time(T).
-holds(Y,T+1) :- holds(Y,T), time(T+1), not -holds(Y,T+1).
+% definition and effect of incompassibility, xor and exist constraints
+xor(C2,C1) :- xor(C1,C2).
+xor(C1,C3) :- xor(C1,C2), xor(C2,C3).
+xor(C,C) :- xor(C,_).
+:- concept(C,1), not xor(C,_).
+:- concept(C,2), not xor(C,_), not exist(C).
 
-% extract incompossibility from xor constraints
-incompossible_set((Xor,O),s(C,O))
-  :- xor_constraint(Xor,T), xor_member(Xor,C), object(O), isa(T,O).
+% we choose the minimal element of an xor equivalence class as the representative element
+xor_repr(C,CR) :- xor(C,_), CR = #min{ C': xor(C,C') }.
 
-incompossible_set((Xor,O1,O2),s2(C,O1,O2))
-  :- xor_constraint2(Xor,T1,T2), xor_member(Xor,C),
-     object(O1), isa(T1,O1), object(O2), isa(T2,O2).
+incomp_var_atoms((CR,V),s(C,V))
+  :- concept(C,1), xor_repr(C,CR), unground_atom(s(C,V)).
+incomp_var_atoms((CR,V1,V2),s2(C,V1,V2))
+  :- concept(C,2), xor_repr(C,CR), unground_atom(s2(C,V1,V2)).
 
-:- xor_constraint(Xor,T), xor_member(Xor,C), not isa(T,C).
-:- xor_constraint(Xor,T), not xor_member(Xor,_).
+incomp_ground_atoms((CR,O),s(C,O))
+  :- concept(C,1), xor_repr(C,CR), ground_atom(s(C,O)).
+incomp_ground_atoms((CR,O1,O2),s2(C,O1,O2))
+  :- concept(C,2), xor_repr(C,CR), ground_atom(s2(C,O1,O2)).
+incomp_ground_atoms((C,O1),s2(C,O1,O2)) :- exist(C), ground_atom(s2(C,O1,O2)).
 
-:- xor_constraint2(Xor,T1,T2), xor_member(Xor,C), not isa2(T1,T2,C).
-:- xor_constraint2(Xor,T1,T2), not xor_member(Xor,_).
-
-% extract incompossibility from exist constraint
-incompossible_set((C,O1),s2(C,O1,O2))
-  :- exist_constraint(C), concept2(C), isa2(T1,T2,C), object(O1), object(O2),
-		 isa(T1,O1), isa(T2,O2).
-
-% sanity check
-%% incompossible_set(1,s(on,a)).
-%% incompossible_set(1,s(off,a)).
-%% time(1..2).
-%% holds(s(on,a),1).
-%% holds(s(off,a),T+1):- holds(s(on,a),T), time(T+1).
-
-%% #show holds/2.
+% definition of incompossible set of ground atoms
+:- incomp_ground_atoms(ID,_), time(T), not hold(Y,T): incomp_ground_atoms(ID,Y).
+-hold(Z,T) :- hold(Y,T), incomp_ground_atoms(ID,Y), incomp_ground_atoms(ID,Z), Y!=Z.
+hold(Y,T+1) :- hold(Y,T), time(T+1), not -hold(Y,T+1).

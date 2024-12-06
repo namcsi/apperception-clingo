@@ -186,6 +186,7 @@ object(obj_cell_1;obj_cell_2;obj_cell_3;obj_cell_4;obj_cell_5;obj_cell_6;obj_cel
 time(1..14).
 concept(c_on).
 concept(c_off).
+xor(c_on,c_off).
 
 % Input exclusions
 % Every sensor is either on or off

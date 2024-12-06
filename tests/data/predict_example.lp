@@ -56,5 +56,4 @@ time(1..10).
 variable(v_x).
 isa(t_sensor,v_x).
 
-xor_constraint(on_off,t_sensor).
-xor_member(on_off,(c_on;c_off)).
+xor(c_on,c_off).
