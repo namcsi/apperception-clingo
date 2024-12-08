@@ -26,10 +26,10 @@ rule_static_dom(0..rule_static_max-1).
 { rule_static(R) } :- rule_static_dom(R).
 
 % choose type signatures for entities
-{ isa(T,O): type(T) } = 1 :- object(O).
-{ isa(T,C): type(T) } = 1 :- concept(C,1).
-{ isa((T1,T2),C): type(T1), type(T2) } = 1 :- concept(C,2).
-{ isa(T,V): type(T) } = 1 :- variable(V).
+1 { isa(T,O): type(T) } 1 :- object(O).
+1 { isa(T,C): type(T) } 1 :- concept(C,1).
+1 { isa((T1,T2),C): type(T1), type(T2) } 1 :- concept(C,2).
+1 { isa(T,V): type(T) } 1 :- variable(V).
 
 % choose xor and exist constraints
 { xor(C1,C2): concept(C2,Arity), isa(T,C2), C2 != C1 } :- concept(C1,Arity), isa(T,C1).
@@ -39,6 +39,6 @@ rule_static_dom(0..rule_static_max-1).
 { init(G) } :- ground_atom(G).
 
 % choose rules
-{ rule_head(R,U): unground_atom(U) } = 1 :- rule(R).
-{ rule_body_size(R,S): 1 <= S <= rule_body_size_max } = 1 :- rule(R).
+1 { rule_head(R,U): unground_atom(U) } 1 :- rule(R).
+1 { rule_body_size(R,S): 1 <= S <= rule_body_size_max } 1 :- rule(R).
 1 { rule_body(R,U): unground_atom(U) } S :- rule(R), rule_body_size(R,S).

@@ -2,8 +2,6 @@
 xor(C2,C1) :- xor(C1,C2).
 xor(C1,C3) :- xor(C1,C2), xor(C2,C3).
 xor(C,C) :- xor(C,_).
-:- concept(C,1), not xor(C,_).
-:- concept(C,2), not xor(C,_), not exist(C).
 
 % we choose the minimal element of an xor equivalence class as the representative element
 xor_repr(C,CR) :- xor(C,_), CR = #min{ C': xor(C,C') }.

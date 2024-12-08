@@ -14,6 +14,8 @@
 % ---- Guess candidate solution from ground head atoms ----
 %
 { hold(G,T) } :- rule_head(_,U), atom_subs(U,G,_), time(T).
+hold(G,T) :- senses(G,T), time(T).
+init(G) :- senses(G,T), init_time(T).
 %
 % -------- Ensure satisfiability --------
 %

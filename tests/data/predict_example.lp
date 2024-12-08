@@ -53,7 +53,5 @@ time(1..10).
 % Input exclusions
 % Every sensor is either on or off
 % S : sensor → on(S) ⊕ off(S)
-variable(v_x).
-isa(t_sensor,v_x).
 
 xor(c_on,c_off).

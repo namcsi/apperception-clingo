@@ -1,19 +1,10 @@
 % -------- Prevent unfoundedness --------
-%
-% Below we only consider tight logic programs
-%
-pos_dep_path(CB,C)
-  :- rule_static(R), rule_head(R,U), rule_body(R,UB),
-		 U=(s(C,_);s2(C,_,_)), UB=(s(CB,_);s2(CB,_,_)).
-pos_dep_path(C,E) :- pos_dep_path(C,D), pos_dep_path(D,E).
-:- pos_dep_path(C,C).
-
 % for each rule with a head atom that holds, we pick a substitution
 % for each variable that occurs in the rule. If this variable occurs
 % in the head atom, the substitution is fixed.  The ground rule
 % corresponding to the substitutions picked will attempt to justify
 % the head atom.
-{ unfounded_subs(R,G,T,(V,O)): subs(V,O) } = 1
+1 { unfounded_subs(R,G,T,(V,O)): subs(V,O) } 1
   :- rule_head(R,U), atom_subs(U,G,_), hold(G,T),
 		 rule_var(R,V), not atom_subs(U,G,(V,_)).
 unfounded_subs(R,G,T,(V,O)) :- rule_head(R,U), atom_subs(U,G,(V,O)), hold(G,T).
