@@ -14,21 +14,22 @@
 % ---- Guess candidate solution from ground head atoms ----
 %
 { hold(G,T) } :- rule_head(_,U), atom_subs(U,G,_), time(T).
+{ hold(G,T) } :- init(G), time(T).
 hold(G,T) :- senses(G,T), time(T).
-init(G) :- senses(G,T), init_time(T).
+
 %
 % -------- Ensure satisfiability --------
 %
 % For each rule and each variable occurring in rule, we disjunct over
 % all substitutions of the variable that we use for checking
 % satisfiability.
-sat_subs(R,(V,O)): rule_var(R,V), subs(V,O).
+sat_subs(R,(V,O)): subs(V,O) :-  rule_var(R,V).
 
 % We derive sat(R,T) if there is some ground instantiation under which
 % the rule is satisfied.
 %
 % This is the case in either of the following two cases.
-% 1. There is a substitution vie sat_subs for a body atom
+% 1. There is a substitution via sat_subs for a body atom
 % under which the ground atom does not hold.
 % 2. There is a substitution via sat_subs for a head atom
 % under which the head atom holds.
@@ -37,7 +38,7 @@ sat(R,T)
   :- rule_static(R), rule_body(R,U), atom_subs(U,G,_), time(T), not hold(G,T),
 		 sat_subs(R,(V,O)): atom_subs(U,G,(V,O)).
 sat(R,T)
-  :- rule_causal(R), rule_body(R,U), atom_subs(U,G,_), time(T-1), not hold(G,T-1),
+  :- rule_causal(R), rule_body(R,U), atom_subs(U,G,_), time(T), time(T-1), not hold(G,T-1),
 		 sat_subs(R,(V,O)): atom_subs(U,G,(V,O)).
 % 2. case
 sat(R,T)
@@ -46,13 +47,13 @@ sat(R,T)
 
 % We have sat if for each rule and time point there is a satisfied
 % ground instantiation.
-sat
+all_sat
   :- sat(R,T): rule_static(R), time(T);
 		 sat(R,T): rule_causal(R), time(T), not init_time(T).
 % saturation
-sat_subs(R,(V,O)) :- sat, rule_var(R,V), subs(V,O).
+sat_subs(R,(V,O)) :- all_sat, rule_var(R,V), subs(V,O).
 % require sat to hold there
-:- not sat.
+:- not all_sat.
 % Due to the above two rules, if there is an answer set T, it must
 % necessarily saturate as we have not not sat. On the other hand,
 % suppose there were a ground instation of a rule r that is not

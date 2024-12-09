@@ -27,17 +27,17 @@ type(t_sensor).
 type(t_letter).
 
 % concepts
-concept2(c_letter).
-isa2(t_sensor,t_letter,c_letter).
+concept(c_letter,2).
+isa((t_sensor,t_letter),c_letter).
 
 % Elements
 object(obj_sensor).
 isa(t_sensor,obj_sensor).
-object((obj_letter_a;obj_letter_b;obj_letter_c;obj_letter_d;obj_letter_e;obj_letter_f)).
+object(obj_letter_a;obj_letter_b;obj_letter_c;obj_letter_d;obj_letter_e;obj_letter_f).
 isa(t_letter,
 	 (obj_letter_a;obj_letter_b;obj_letter_c;obj_letter_d;obj_letter_e;obj_letter_f)).
 
-time(1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17).
+time(1..17).
 
 % Every sensor has a unique letter attribute
 

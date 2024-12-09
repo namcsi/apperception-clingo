@@ -30,5 +30,10 @@ unfounded(R,G,T)
 
 % It cannot be the case that an atom is not founded by a rule or by
 % inertia or by being an initial fact.
-:- hold(G,T), init_time(T), not init(G), unfounded(R,G,T): rule_static(R).
-:- hold(G,T), not init_time(T), not hold(G,T-1), unfounded(R,G,T): rule(R).
+%% :- rule_head(R,U), atom_subs(U,G,_),
+
+:- hold(G,T), init_time(T), not init(G),
+	 unfounded(R,G,T): rule_static(R), rule_head(R,U), atom_subs(U,G,_).
+
+:- hold(G,T), not init_time(T), not hold(G,T-1),
+	 unfounded(R,G,T): rule(R), rule_head(R,U), atom_subs(U,G,_).

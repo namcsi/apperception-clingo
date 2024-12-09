@@ -3,6 +3,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 init_time(1).
+init(G) :- senses(G,T), init_time(T).
 hold(G,T) :- init_time(T), init(G).
 
 % always instatiate input
@@ -34,5 +35,8 @@ ground_atom(G) :- atom_subs(_,G,_).
 % Version with more symmetries but much less grounding
 rule(R) :- rule_causal(R).
 rule(R) :- rule_static(R).
-rule_var(R,V) :- rule_body(R,U), atom_var(U,V).
-%% rule_var(R,V) :- rule_head(R,U), atom_var(U,V).
+rule_body_var(R,V) :- rule_body(R,U), atom_var(U,V).
+rule_var(R,V) :- rule_body_var(R,V).
+rule_var(R,V) :- rule_head(R,U), atom_var(U,V).
+rule_ground_head(R,G) :- rule_head(R,U), atom_subs(U,G,_).
+rule_ground_body(R,G) :- rule_body(R,U), atom_subs(U,G,_).

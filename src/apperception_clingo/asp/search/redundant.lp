@@ -1,6 +1,6 @@
 :- init(G1), init(G2), incomp_ground_atoms(ID,G1), incomp_ground_atoms(ID,G2).
 :- rule_body(R,U1), rule_body(R,U2), incomp_var_atoms(ID,U1), incomp_var_atoms(ID,U2).
 :- rule_body(R,U), rule_head(R,U).
-:- rule_head(R,U), atom_var(U,V), not rule_var(R,V).
+:- rule_head(R,U), atom_var(U,V), not rule_body_var(R,V).
 :- rule_static(R), rule_body(R,U1), rule_head(R,U2),
 	 incomp_var_atoms(ID,U1), incomp_var_atoms(ID,U2).
