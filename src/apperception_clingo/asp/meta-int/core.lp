@@ -2,7 +2,7 @@
 
 #include "definitions.lp".
 #include "incompos.lp".
-#include "unified-interpretation.lp".
+#include "unity.lp".
 
 %% #include "generate.lp".
 %% #include "symmetry-breaking.lp".

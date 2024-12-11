@@ -22,7 +22,7 @@ typecheck = ["types-setuptools", "mypy"]
 test = ["coverage[toml]"]
 doc = ["sphinx", "furo", "nbsphinx", "sphinx_copybutton", "myst-parser", "toml"]
 lsp = ["python-lsp-server","flake8", "flake8-black", "pylint", "rope", "pylsp-mypy", "pylsp-rope", "python-lsp-black"]
-dev = ["apperception_clingo[test,typecheck,lint_pylint,lsp]"]
+dev = ["apperception_clingo[test,typecheck,lint_pylint,lsp,format]"]
 
 [project.scripts]
 apperception_clingo = "apperception_clingo.__main__:main"

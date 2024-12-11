@@ -1,7 +1,7 @@
 %% expected:
 %% hold(s(p,a),1).
 %% hold(s(q,a),1).
-
+#include "defined.lp".
 concept((q;p;q';p'),1).
 isa(t,(q;p;q';p')).
 variable(x;y).

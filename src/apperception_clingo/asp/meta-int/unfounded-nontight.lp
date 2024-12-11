@@ -1,3 +1,4 @@
+% could we do this with more efficiently with clingo-dl?
 1 { less(G1,G2); less(G2,G1) } 1 :- ground_atom(G1), ground_atom(G2), G1 < G2, time(T).
 :- less(G1,G2), less(G2,G3), less(G3,G1).
 

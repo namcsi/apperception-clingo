@@ -1,6 +1,6 @@
 %% expected: don't derive atoms in loop, i.e.
 %% UNSAT
-
+#include "defined.lp".
 concept((p;q;p';q'),1).
 isa(t,(p;q;p';q')).
 variable(x;y).

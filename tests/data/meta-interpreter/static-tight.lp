@@ -2,7 +2,7 @@
 %% hold(s(p,a),1).
 %% hold(s(q,a),1).
 %% hold(s(r,a),1).
-
+#include "defined.lp".
 concept((p;q;r;p';q';r'),1).
 isa(t,(p;q;r;p';q';r')).
 variable(x).

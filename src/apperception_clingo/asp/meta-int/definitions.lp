@@ -16,20 +16,24 @@ exist(C) :- input(exist(C)).
 #defined input/1.
 
 
-% construct unground atoms
+% construct unground atoms.
 unground_atom(s(C,V)) :- concept(C,1), isa(T,C), variable(V), isa(T,V).
 unground_atom(s2(C,V1,V2))
   :- concept(C,2), isa((T1,T2),C), variable(V1), isa(T1,V), variable(V2), isa(T2,V2).
 atom_var(s(C,V),V) :- unground_atom(s(C,V)).
 atom_var(s2(C,V1,V2),(V1;V2)) :- unground_atom(s2(C,V1,V2)).
 
-% generate variable substitutions and ground atoms
+% construct ground atoms.
+ground_atom(s(C,O)) :- concept(C,1), isa(T,C), object(O), isa(T,O).
+ground_atom(s2(C,O1,O2))
+  :- concept(C,2), isa((T1,T2),C), object(O1), isa(T1,O1), object(O2), isa(T2,O2).
+
+% generate variable substitutions.
 subs(V,O) :- variable(V), isa(T,V), object(O), isa(T,O).
 atom_subs(s(C,V),s(C,O),(V,O)) :- unground_atom(s(C,V)), subs(V,O).
 atom_subs(s2(C,V1,V2),s2(C,O1,O2),((V1,O1);(V2,O2)))
   :- unground_atom(s2(C,V1,V2)), V1 != V2, subs(V1,O1), subs(V2,O2).
 atom_subs(s2(C,V,V),s2(C,O,O),(V,O)) :- unground_atom(s2(C,V,V)), subs(V,O).
-ground_atom(G) :- atom_subs(_,G,_).
 
 % construct rules
 % Version with more symmetries but much less grounding

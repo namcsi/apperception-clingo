@@ -4,7 +4,7 @@
 related(A,B,T) :- hold(s2(_,A,B),T).
 related(B,A,T) :- related(A,B,T).
 related(A,C,T) :- related(A,B,T), related(B,C,T).
-:- object(O1), object(O2), time(T), not related(O1,O2,T).
+:- object(O1), object(O2), O1 < O2, time(T), not related(O1,O2,T).
 
 % ---- conceptual unity ----
 % Each unary concept must appear in an xor constraint
