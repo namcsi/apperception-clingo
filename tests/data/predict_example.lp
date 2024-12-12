@@ -19,32 +19,33 @@
 %---------------------------------------------
 
 % The given sequence
-%% hidden(s(c_on, obj_sensor_a), 1).
-%% hidden(s(c_on, obj_sensor_b), 1).
-%% senses(s(c_off, obj_sensor_a), 2).
-%% senses(s(c_on, obj_sensor_b), 2).
-%% senses(s(c_on, obj_sensor_a), 3).
-%% senses(s(c_off, obj_sensor_b), 3).
-%% senses(s(c_on, obj_sensor_a), 4).
-%% senses(s(c_on, obj_sensor_b), 4).
-%% hidden(s(c_off, obj_sensor_a), 5).
-%% senses(s(c_on, obj_sensor_b), 5).
-%% senses(s(c_on, obj_sensor_a), 6).
-%% senses(s(c_off, obj_sensor_b), 6).
-%% senses(s(c_on, obj_sensor_a), 7).
-%% senses(s(c_on, obj_sensor_b), 7).
-%% senses(s(c_off, obj_sensor_a), 8).
-%% senses(s(c_on, obj_sensor_b), 8).
-%% senses(s(c_on, obj_sensor_a), 9).
-%% hidden(s(c_off, obj_sensor_b), 9).
-%% hidden(s(c_on, obj_sensor_a), 10).
-%% hidden(s(c_on, obj_sensor_b), 10).
+hidden(s(concept(on), object(a)), 1).
+hidden(s(concept(on), object(b)), 1).
+senses(s(concept(off), object(a)), 2).
+senses(s(concept(on), object(b)), 2).
+senses(s(concept(on), object(a)), 3).
+senses(s(concept(off), object(b)), 3).
+senses(s(concept(on), object(a)), 4).
+senses(s(concept(on), object(b)), 4).
+hidden(s(concept(off), object(a)), 5).
+senses(s(concept(on), object(b)), 5).
+senses(s(concept(on), object(a)), 6).
+senses(s(concept(off), object(b)), 6).
+senses(s(concept(on), object(a)), 7).
+senses(s(concept(on), object(b)), 7).
+senses(s(concept(off), object(a)), 8).
+senses(s(concept(on), object(b)), 8).
+senses(s(concept(on), object(a)), 9).
+hidden(s(concept(off), object(b)), 9).
+hidden(s(concept(on), object(a)), 10).
+hidden(s(concept(on), object(b)), 10).
 
-type(t_sensor).object(obj_sensor_a;obj_sensor_b).
-isa(t_sensor,(obj_sensor_a;obj_sensor_b)).
-concept(c_on,1).
-concept(c_off,1).
-isa(t_sensor,(c_on;c_off)).
+input(type(sensor)).
+input(object(a;b)).
+input(isa(sensor,object(a;b))).
+input(concept(on,1)).
+input(concept(off,1)).
+input(isa(sensor,concept(on;off))).
 time(1..10).
 
 % Input exclusions
@@ -54,4 +55,4 @@ time(1..10).
 % Every sensor is either on or off
 % S : sensor → on(S) ⊕ off(S)
 
-xor(c_on,c_off).
+input(xor(concept(on),concept(off))).

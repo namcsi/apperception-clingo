@@ -34,12 +34,12 @@ sat_subs(R,(V,O)): subs(V,O) :-  rule_var(R,V).
 % 2. There is a substitution via sat_subs for a head atom
 % under which the head atom holds.
 % 1. case
-sat(R,T)
-  :- rule_static(R), rule_body(R,U), atom_subs(U,G,_), time(T), not hold(G,T),
-		 sat_subs(R,(V,O)): atom_subs(U,G,(V,O)).
-sat(R,T)
-  :- rule_causal(R), rule_body(R,U), atom_subs(U,G,_), time(T), time(T-1), not hold(G,T-1),
-		 sat_subs(R,(V,O)): atom_subs(U,G,(V,O)).
+sat(rule_static(R),T)
+  :- rule_static(R), rule_body(rule_static(R),U), atom_subs(U,G,_), time(T), not hold(G,T),
+		 sat_subs(rule_static(R),(V,O)): atom_subs(U,G,(V,O)).
+sat(rule_causal(R),T)
+  :- rule_causal(R), rule_body(rule_causal(R),U), atom_subs(U,G,_), time(T), time(T-1), not hold(G,T-1),
+		 sat_subs(rule_causal(R),(V,O)): atom_subs(U,G,(V,O)).
 % 2. case
 sat(R,T)
   :- rule_head(R,U), atom_subs(U,G,_), hold(G,T),
@@ -48,8 +48,8 @@ sat(R,T)
 % We have sat if for each rule and time point there is a satisfied
 % ground instantiation.
 all_sat
-  :- sat(R,T): rule_static(R), time(T);
-		 sat(R,T): rule_causal(R), time(T), not init_time(T).
+  :- sat(rule_static(R),T): rule_static(R), time(T);
+		 sat(rule_causal(R),T): rule_causal(R), time(T), not init_time(T).
 % saturation
 sat_subs(R,(V,O)) :- all_sat, rule_var(R,V), subs(V,O).
 % require sat to hold there

@@ -4,21 +4,21 @@
 %% hold(s(p',a),2).
 #include "defined.lp".
 concept((p;p'),1).
-isa(t,(p;p')).
+isa(t,concept(p;p')).
 variable(x).
-isa(t,(x)).
+isa(t,variable(x)).
 object(a).
-isa(t,a).
-xor(p,p').
+isa(t,object(a)).
+xor(concept(p),concept(p')).
 
 time(1..3).
 
-init(s(p,a)).
+init(s(concept(p),object(a))).
 
 rule_causal(1;2).
 
-rule_head(1,s(p,x)).
-rule_body(1,s(p',x)).
+rule_head(rule_causal(1),s(concept(p),variable(x))).
+rule_body(rule_causal(1),s(concept(p'),variable(x))).
 
-rule_head(2,s(p',x)).
-rule_body(2,s(p,x)).
+rule_head(rule_causal(2),s(concept(p'),variable(x))).
+rule_body(rule_causal(2),s(concept(p),variable(x))).

@@ -5,34 +5,37 @@ concept((r;q),2).
 variable(x;y;z).
 object(a;b;c).
 
-isa(t,(x;a)).
-isa(u,(f;g;h;b;c;y;z)).
-isa((t,u),r).
-isa((u,u),q).
+isa(t,object(a)).
+isa(u,object(b;c)).
+isa(t,variable(x)).
+isa(u,variable(y;z)).
+isa(u,concept(f;g;h)).
 
-xor(f,g;g,h).
-exist(r;q).
+isa((t,u),concept(r)).
+isa((u,u),concept(q)).
+
+xor(concept(f),concept(g);concept(g),concept(h)).
+exist(concept(r);concept(q)).
 
 time(1..4).
 
-init(s2(r,a,b)).
-init(s2(q,b,c)).
-init(s2(q,c,b)).
-init(s(h,b)).
-init(s(g,c)).
+init(s2(concept(r),object(a),object(b))).
+init(s2(concept(q),object(b),object(c))).
+init(s2(concept(q),object(c),object(b))).
+init(s(concept(h),object(b))).
+init(s(concept(g),object(c))).
 
-rule_causal(1..3).
+rule_causal(1..4).
 
-rule_head(1,s(f,y)).
-rule_body(1,s(g,y)).
+rule_head(rule_causal(1),s(concept(f),variable(y))).
+rule_body(rule_causal(1),s(concept(g),variable(y))).
 
-rule_head(2,s(g,y)).
-rule_body(2,s(h,y)).
+rule_head(rule_causal(2),s(concept(g),variable(y))).
+rule_body(rule_causal(2),s(concept(h),variable(y))).
 
-rule_head(3,s(h,y)).
-rule_body(3,s(f,y)).
+rule_head(rule_causal(3),s(concept(h),variable(y))).
+rule_body(rule_causal(3),s(concept(f),variable(y))).
 
-rule_causal(4).
-rule_head(4,s2(r,x,z)).
-rule_body(4,s(f,z)).
-rule_body(4,s2(r,x,y)).
+rule_head(rule_causal(4),s2(concept(r),variable(x),variable(z))).
+rule_body(rule_causal(4),s(concept(f),variable(z))).
+rule_body(rule_causal(4),s2(concept(r),variable(x),variable(y))).
