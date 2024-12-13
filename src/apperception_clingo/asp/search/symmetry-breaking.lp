@@ -4,8 +4,8 @@
 % order of identifiers, without any gaps. We exclude inputs from this
 % constraint, as it could lead to unsat for valid solutions.
 
-:- rule_causal_dom(X1), rule_causal(X2), X1 < X2, not rule_causal(X1).
-:- rule_static_dom(X1), rule_static(X2), X1 < X2, not rule_static(X1).
+:- rule_causal_domain(X1), rule_causal(X2), X1 < X2, not rule_causal(X1).
+:- rule_static_domain(X1), rule_static(X2), X1 < X2, not rule_static(X1).
 
 % Symmetry breaking for type assignment.
 %
@@ -48,6 +48,7 @@ eq_rule_head(rule_static(R1),rule_static(R2))
   :- rule_head(rule_static(R1),U), rule_head(rule_static(R2),U), R1 != R2.
 
 % If head atom is the same, we order via size of body
+rule_body_size(R,S) :- rule(R), S = #count{ U: rule_body(R,U) }.
 less_rule_body_size(R1,R2)
   :- eq_rule_head(R1,R2), rule_body_size(R1,S1), rule_body_size(R2,S2), S1 < S2.
 

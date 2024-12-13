@@ -19,26 +19,26 @@
 %---------------------------------------------
 
 % The given sequence
-hidden(s(concept(on), object(a)), 1).
-hidden(s(concept(on), object(b)), 1).
-senses(s(concept(off), object(a)), 2).
-senses(s(concept(on), object(b)), 2).
-senses(s(concept(on), object(a)), 3).
-senses(s(concept(off), object(b)), 3).
-senses(s(concept(on), object(a)), 4).
-senses(s(concept(on), object(b)), 4).
-hidden(s(concept(off), object(a)), 5).
-senses(s(concept(on), object(b)), 5).
-senses(s(concept(on), object(a)), 6).
-senses(s(concept(off), object(b)), 6).
-senses(s(concept(on), object(a)), 7).
-senses(s(concept(on), object(b)), 7).
-senses(s(concept(off), object(a)), 8).
-senses(s(concept(on), object(b)), 8).
-senses(s(concept(on), object(a)), 9).
-hidden(s(concept(off), object(b)), 9).
-hidden(s(concept(on), object(a)), 10).
-hidden(s(concept(on), object(b)), 10).
+hidden(s(concept(on,1), object(a)), 1).
+hidden(s(concept(on,1), object(b)), 1).
+senses(s(concept(off,1), object(a)), 2).
+senses(s(concept(on,1), object(b)), 2).
+senses(s(concept(on,1), object(a)), 3).
+senses(s(concept(off,1), object(b)), 3).
+senses(s(concept(on,1), object(a)), 4).
+senses(s(concept(on,1), object(b)), 4).
+hidden(s(concept(off,1), object(a)), 5).
+senses(s(concept(on,1), object(b)), 5).
+senses(s(concept(on,1), object(a)), 6).
+senses(s(concept(off,1), object(b)), 6).
+senses(s(concept(on,1), object(a)), 7).
+senses(s(concept(on,1), object(b)), 7).
+senses(s(concept(off,1), object(a)), 8).
+senses(s(concept(on,1), object(b)), 8).
+senses(s(concept(on,1), object(a)), 9).
+hidden(s(concept(off,1), object(b)), 9).
+hidden(s(concept(on,1), object(a)), 10).
+hidden(s(concept(on,1), object(b)), 10).
 
 input(type(sensor)).
 input(object(a;b)).
@@ -55,4 +55,4 @@ time(1..10).
 % Every sensor is either on or off
 % S : sensor → on(S) ⊕ off(S)
 
-input(xor(concept(on),concept(off))).
+input(xor(concept(on,1),concept(off,1))).
