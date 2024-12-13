@@ -29,8 +29,9 @@ unfounded(R,G,T)
 		 not hold(GB,T).
 
 % It cannot be the case that an atom that holds in the initial time
-% step is not founded by being an init atom and also not founded by a static rule.
-:- hold(G,T), init_time(T), not init(G),
+% step is not founded by being an init atom/input sensory reading and
+% also not founded by a static rule.
+:- hold(G,T), init_time(T), not init(G), not senses(G,T),
 	 unfounded(static(R),G,T): static(R), rule_head(static(R),U), atom_subs(U,G,_).
 
 % It cannot be the case that an atom that holds in a non-initial time

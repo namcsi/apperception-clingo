@@ -4,7 +4,6 @@
 
 #const first_time_point = 1.
 init_time(first_time_point).
-init(G) :- senses(G,T), init_time(T).
 hold(G,T) :- init_time(T), init(G).
 
 % always instatiate input
