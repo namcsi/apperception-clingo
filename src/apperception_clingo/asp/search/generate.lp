@@ -26,13 +26,14 @@ rule_static_domain(0..rule_static_max-1).
 
 % choose type signatures for entities
 1 { isa(T,object(O)): type(T) } 1 :- object(O).
-1 { isa(T,concept(C)): type(T) } 1 :- concept(C,1).
-1 { isa((T1,T2),concept(C)): type(T1), type(T2) } 1 :- concept(C,2).
+1 { isa(T,concept(C,1)): type(T) } 1 :- concept(C,1).
+1 { isa((T1,T2),concept(C,2)): type(T1), type(T2) } 1 :- concept(C,2).
 1 { isa(T,variable(V)): type(T) } 1 :- variable(V).
 
 % choose xor and exist constraints
-{ xor(C1,C2): concept(C2,Arity), isa(T,C2), C1 < C2 } :- concept(C1,Arity), isa(T,concept(C1)).
-{ exist(C) } :- concept(C,2).
+{ xor(concept(C1,Arity),concept(C2,Arity)): concept(C2,Arity), isa(T,C2), C1 != C2 }
+  :- concept(C1,Arity), isa(T,concept(C1,Arity)).
+{ exist(concept(C,2)) } :- concept(C,2).
 
 % choose atoms that hold in the initial time step.
 { init(G) } :- ground_atom(G).

@@ -45,7 +45,7 @@ input(object(a;b)).
 input(isa(sensor,object(a;b))).
 input(concept(on,1)).
 input(concept(off,1)).
-input(isa(sensor,concept(on;off))).
+input(isa(sensor,concept((on;off),1))).
 time(1..10).
 
 % Input exclusions

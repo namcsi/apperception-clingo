@@ -19,19 +19,19 @@ variable(V) :- input(variable(V)).
 
 
 % construct unground atoms.
-unground_atom(s(concept(C),variable(V)))
-  :- concept(C,1), isa(T,concept(C)), variable(V), isa(T,variable(V)).
-unground_atom(s2(concept(C),variable(V1),variable(V2)))
-  :- concept(C,2), isa((T1,T2),concept(C)), variable(V1), isa(T1,variable(V)),
+unground_atom(s(concept(C,1),variable(V)))
+  :- concept(C,1), isa(T,concept(C,1)), variable(V), isa(T,variable(V)).
+unground_atom(s2(concept(C,2),variable(V1),variable(V2)))
+  :- concept(C,2), isa((T1,T2),concept(C,2)), variable(V1), isa(T1,variable(V)),
 		 variable(V2), isa(T2,variable(V2)).
 atom_var(s(C,V),V) :- unground_atom(s(C,V)).
 atom_var(s2(C,V1,V2),(V1;V2)) :- unground_atom(s2(C,V1,V2)).
 
 % construct ground atoms.
-ground_atom(s(concept(C),object(O)))
-  :- concept(C,1), isa(T,concept(C)), object(O), isa(T,object(O)).
-ground_atom(s2(concept(C),object(O1),object(O2)))
-  :- concept(C,2), isa((T1,T2),concept(C)), object(O1), isa(T1,object(O1)),
+ground_atom(s(concept(C,1),object(O)))
+  :- concept(C,1), isa(T,concept(C,1)), object(O), isa(T,object(O)).
+ground_atom(s2(concept(C,2),object(O1),object(O2)))
+  :- concept(C,2), isa((T1,T2),concept(C,2)), object(O1), isa(T1,object(O1)),
 		 object(O2), isa(T2,object(O2)).
 
 % generate variable substitutions.

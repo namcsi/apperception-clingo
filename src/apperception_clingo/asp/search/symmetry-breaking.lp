@@ -4,13 +4,8 @@
 % order of identifiers, without any gaps. We exclude inputs from this
 % constraint, as it could lead to unsat for valid solutions.
 
-:- concept_dom(X1), concept(X2,_), X1 < X2, not concept(X1,_), not input(concept(X2,_)).
 :- rule_causal_dom(X1), rule_causal(X2), X1 < X2, not rule_causal(X1).
 :- rule_static_dom(X1), rule_static(X2), X1 < X2, not rule_static(X1).
-
-% Unary concepts are instantiated first, then binary ones
-:- concept(C1,1), concept(C2,2), C2 < C1,
-	 not input(concept(C2,_)), not input(concept(C1,_)).
 
 % Symmetry breaking for type assignment.
 %
@@ -21,7 +16,7 @@
 	 not input(object(O1)), not input(object(O2)).
 
 :- concept(C1,1), concept(C2,1), C1 < C2,
-	 isa(T1,concept(C1)), isa(T2,concept(C2)), T2 < T1,
+	 isa(T1,concept(C1,1)), isa(T2,concept(C2,2)), T2 < T1,
 	 not input(concept(C1,1)), not input(concept(C2,1)).
 
 :- concept(C1,2), concept(C2,2), C1 < C2,

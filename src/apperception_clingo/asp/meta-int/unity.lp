@@ -9,5 +9,5 @@ related(A,C,T) :- related(A,B,T), related(B,C,T), A != B, B != C, A != C.
 % ---- conceptual unity ----
 % Each unary concept must appear in an xor constraint
 % Each binary concept must appear in an xor or exist constraint.
-:- concept(C,1), not xor(concept(C),_).
-:- concept(C,2), not xor(concept(C),_), not exist(concept(C)).
+:- concept(C,1), not xor(concept(C,1),_).
+:- concept(C,2), not xor(concept(C,2),_), not exist(concept(C,2)).
