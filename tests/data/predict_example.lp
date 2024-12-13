@@ -19,40 +19,40 @@
 %---------------------------------------------
 
 % The given sequence
-hidden(s(concept(on,1), object(a)), 1).
-hidden(s(concept(on,1), object(b)), 1).
-senses(s(concept(off,1), object(a)), 2).
-senses(s(concept(on,1), object(b)), 2).
-senses(s(concept(on,1), object(a)), 3).
-senses(s(concept(off,1), object(b)), 3).
-senses(s(concept(on,1), object(a)), 4).
-senses(s(concept(on,1), object(b)), 4).
-hidden(s(concept(off,1), object(a)), 5).
-senses(s(concept(on,1), object(b)), 5).
-senses(s(concept(on,1), object(a)), 6).
-senses(s(concept(off,1), object(b)), 6).
-senses(s(concept(on,1), object(a)), 7).
-senses(s(concept(on,1), object(b)), 7).
-senses(s(concept(off,1), object(a)), 8).
-senses(s(concept(on,1), object(b)), 8).
-senses(s(concept(on,1), object(a)), 9).
-hidden(s(concept(off,1), object(b)), 9).
-hidden(s(concept(on,1), object(a)), 10).
-hidden(s(concept(on,1), object(b)), 10).
+hidden(s(pred(on,1), obj(a)), 1).
+hidden(s(pred(on,1), obj(b)), 1).
+senses(s(pred(off,1), obj(a)), 2).
+senses(s(pred(on,1), obj(b)), 2).
+senses(s(pred(on,1), obj(a)), 3).
+senses(s(pred(off,1), obj(b)), 3).
+senses(s(pred(on,1), obj(a)), 4).
+senses(s(pred(on,1), obj(b)), 4).
+hidden(s(pred(off,1), obj(a)), 5).
+senses(s(pred(on,1), obj(b)), 5).
+senses(s(pred(on,1), obj(a)), 6).
+senses(s(pred(off,1), obj(b)), 6).
+senses(s(pred(on,1), obj(a)), 7).
+senses(s(pred(on,1), obj(b)), 7).
+senses(s(pred(off,1), obj(a)), 8).
+senses(s(pred(on,1), obj(b)), 8).
+senses(s(pred(on,1), obj(a)), 9).
+hidden(s(pred(off,1), obj(b)), 9).
+hidden(s(pred(on,1), obj(a)), 10).
+hidden(s(pred(on,1), obj(b)), 10).
 
 input(type(sensor)).
-input(object(a;b)).
-input(isa(sensor,object(a;b))).
-input(concept(on,1)).
-input(concept(off,1)).
-input(isa(sensor,concept((on;off),1))).
+input(obj(a;b)).
+input(isa(sensor,obj(a;b))).
+input(pred(on,1)).
+input(pred(off,1)).
+input(isa(sensor,pred((on;off),1))).
 time(1..10).
 
 % Input exclusions
-% Every object is either on or off
+% Every obj is either on or off
 % on(X) ⊕ off(X)
 % Input exclusions
 % Every sensor is either on or off
 % S : sensor → on(S) ⊕ off(S)
 
-input(xor(concept(on,1),concept(off,1))).
+input(xor(pred(on,1),pred(off,1))).

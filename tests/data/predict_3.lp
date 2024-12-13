@@ -26,14 +26,14 @@ hidden(s2(c_letter, obj_sensor, obj_letter_f), 17).
 type(t_sensor).
 type(t_letter).
 
-% concepts
-concept(c_letter,2).
+% preds
+pred(c_letter,2).
 isa((t_sensor,t_letter),c_letter).
 
 % Elements
-object(obj_sensor).
+obj(obj_sensor).
 isa(t_sensor,obj_sensor).
-object(obj_letter_a;obj_letter_b;obj_letter_c;obj_letter_d;obj_letter_e;obj_letter_f).
+obj(obj_letter_a;obj_letter_b;obj_letter_c;obj_letter_d;obj_letter_e;obj_letter_f).
 isa(t_letter,
 	 (obj_letter_a;obj_letter_b;obj_letter_c;obj_letter_d;obj_letter_e;obj_letter_f)).
 

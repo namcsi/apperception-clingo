@@ -2,5 +2,5 @@
 :- rule_body(R,U1), rule_body(R,U2), incomp_var_atoms(ID,U1), incomp_var_atoms(ID,U2).
 :- rule_body(R,U), rule_head(R,U).
 :- rule_head(R,U), atom_var(U,V), not rule_body_var(R,V).
-:- rule_body(rule_static(R),U1), rule_head(rule_static(R),U2),
+:- rule_body(static(R),U1), rule_head(static(R),U2),
 	 incomp_var_atoms(ID,U1), incomp_var_atoms(ID,U2).

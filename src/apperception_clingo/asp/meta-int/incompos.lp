@@ -7,14 +7,14 @@ xor(C,C) :- xor(C,_).
 xor_repr(C,CR) :- xor(C,_), CR = #min{ C': xor(C,C') }.
 
 incomp_var_atoms((CR,V),s(C,V))
-  :- C = concept(_,1), xor_repr(C,CR), unground_atom(s(C,V)).
+  :- C = pred(_,1), xor_repr(C,CR), unground_atom(s(C,V)).
 incomp_var_atoms((CR,V1,V2),s2(C,V1,V2))
-  :- C = concept(_,2), xor_repr(C,CR), unground_atom(s2(C,V1,V2)).
+  :- C = pred(_,2), xor_repr(C,CR), unground_atom(s2(C,V1,V2)).
 
 incomp_ground_atoms((CR,O),s(C,O))
-  :- C = concept(_,1),  xor_repr(C,CR), ground_atom(s(C,O)).
+  :- C = pred(_,1),  xor_repr(C,CR), ground_atom(s(C,O)).
 incomp_ground_atoms((CR,O1,O2),s2(C,O1,O2))
-  :- C = concept(_,1), xor_repr(C,CR), ground_atom(s2(C,O1,O2)).
+  :- C = pred(_,1), xor_repr(C,CR), ground_atom(s2(C,O1,O2)).
 incomp_ground_atoms((C,O1),s2(C,O1,O2)) :- exist(C), ground_atom(s2(C,O1,O2)).
 
 % definition of incompossible set of ground atoms

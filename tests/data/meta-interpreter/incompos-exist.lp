@@ -1,41 +1,41 @@
 #include "defined.lp".
 type(t;u).
-concept((f;g;h),1).
-concept((r;q),2).
-variable(x;y;z).
-object(a;b;c).
+pred((f;g;h),1).
+pred((r;q),2).
+var(x;y;z).
+obj(a;b;c).
 
-isa(t,object(a)).
-isa(u,object(b;c)).
-isa(t,variable(x)).
-isa(u,variable(y;z)).
-isa(u,concept((f;g;h),1)).
+isa(t,obj(a)).
+isa(u,obj(b;c)).
+isa(t,var(x)).
+isa(u,var(y;z)).
+isa(u,pred((f;g;h),1)).
 
-isa((t,u),concept(r,2)).
-isa((u,u),concept(q,2)).
+isa((t,u),pred(r,2)).
+isa((u,u),pred(q,2)).
 
-xor(concept(f,1),concept(g,1);concept(g,1),concept(h,1)).
-exist(concept(r,2);concept(q,2)).
+xor(pred(f,1),pred(g,1);pred(g,1),pred(h,1)).
+exist(pred(r,2);pred(q,2)).
 
 time(1..4).
 
-init(s2(concept(r,2),object(a),object(b))).
-init(s2(concept(q,2),object(b),object(c))).
-init(s2(concept(q,2),object(c),object(b))).
-init(s(concept(h,1),object(b))).
-init(s(concept(g,1),object(c))).
+init(s2(pred(r,2),obj(a),obj(b))).
+init(s2(pred(q,2),obj(b),obj(c))).
+init(s2(pred(q,2),obj(c),obj(b))).
+init(s(pred(h,1),obj(b))).
+init(s(pred(g,1),obj(c))).
 
-rule_causal(1..4).
+causal(1..4).
 
-rule_head(rule_causal(1),s(concept(f,1),variable(y))).
-rule_body(rule_causal(1),s(concept(g,1),variable(y))).
+rule_head(causal(1),s(pred(f,1),var(y))).
+rule_body(causal(1),s(pred(g,1),var(y))).
 
-rule_head(rule_causal(2),s(concept(g,1),variable(y))).
-rule_body(rule_causal(2),s(concept(h,1),variable(y))).
+rule_head(causal(2),s(pred(g,1),var(y))).
+rule_body(causal(2),s(pred(h,1),var(y))).
 
-rule_head(rule_causal(3),s(concept(h,1),variable(y))).
-rule_body(rule_causal(3),s(concept(f,1),variable(y))).
+rule_head(causal(3),s(pred(h,1),var(y))).
+rule_body(causal(3),s(pred(f,1),var(y))).
 
-rule_head(rule_causal(4),s2(concept(r,2),variable(x),variable(z))).
-rule_body(rule_causal(4),s(concept(f,1),variable(z))).
-rule_body(rule_causal(4),s2(concept(r,2),variable(x),variable(y))).
+rule_head(causal(4),s2(pred(r,2),var(x),var(z))).
+rule_body(causal(4),s(pred(f,1),var(z))).
+rule_body(causal(4),s2(pred(r,2),var(x),var(y))).

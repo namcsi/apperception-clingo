@@ -4,35 +4,35 @@
 
 
 #const gen_types = 0.
-#const gen_objects = 0.
-#const gen_unary_concepts = 0.
-#const gen_binary_concepts = 0.
-#const gen_variables = 0.
-#const rule_causal_max = 0.
-#const rule_static_max = 0.
+#const gen_objs = 0.
+#const gen_unary_preds = 0.
+#const gen_binary_preds = 0.
+#const gen_vars = 0.
+#const causal_max = 0.
+#const static_max = 0.
 #const rule_body_size_max = 0.
 
 type(1..gen_types).
-concept(1..gen_unary_concepts,1).
-concept(1..gen_binary_concepts,2).
-object(1..gen_objects).
-variable(1..gen_variables).
-rule_causal_domain(1..rule_causal_max).
-rule_static_domain(1..rule_static_max).
+pred(1..gen_unary_preds,1).
+pred(1..gen_binary_preds,2).
+obj(1..gen_objs).
+var(1..gen_vars).
+causal_domain(1..causal_max).
+static_domain(1..static_max).
 
 % choose to use rules
-{ rule_causal(R) } :- rule_causal_domain(R).
-{ rule_static(R) } :- rule_static_domain(R).
+{ causal(R) } :- causal_domain(R).
+{ static(R) } :- static_domain(R).
 
 % choose type signatures for entities
-1 { isa(T,object(O)): type(T) } 1 :- object(O).
-1 { isa(T,concept(C,1)): type(T) } 1 :- concept(C,1).
-1 { isa((T1,T2),concept(C,2)): type(T1), type(T2) } 1 :- concept(C,2).
-1 { isa(T,variable(V)): type(T) } 1 :- variable(V).
+1 { isa(T,obj(O)): type(T) } 1 :- obj(O).
+1 { isa(T,pred(C,1)): type(T) } 1 :- pred(C,1).
+1 { isa((T1,T2),pred(C,2)): type(T1), type(T2) } 1 :- pred(C,2).
+1 { isa(T,var(V)): type(T) } 1 :- var(V).
 
 % choose xor and exist constraints
-{ xor(C1,C2): C2 = concept(_,A), isa(T,C2), C1 < C2 } :- C1 = concept(_,A), isa(T,C1).
-{ exist(concept(C,2)) } :- concept(C,2).
+{ xor(C1,C2): C2 = pred(_,A), isa(T,C2), C1 < C2 } :- C1 = pred(_,A), isa(T,C1).
+{ exist(pred(C,2)) } :- pred(C,2).
 
 % choose atoms that hold in the initial time step.
 { init(G) } :- ground_atom(G).

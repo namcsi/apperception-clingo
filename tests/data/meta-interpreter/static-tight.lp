@@ -4,21 +4,21 @@
 %% hold(s(r,a),1).
 #include "defined.lp".
 type(t).
-concept((p;q;r;p';q';r'),1).
-isa(t,concept((p;q;r;p';q';r'),1)).
-variable(x).
-isa(t,variable(x)).
-xor(concept(r,1),concept(r',1);concept(p,1),concept(p',1);concept(q,1),concept(q',1)).
+pred((p;q;r;p';q';r'),1).
+isa(t,pred((p;q;r;p';q';r'),1)).
+var(x).
+isa(t,var(x)).
+xor(pred(r,1),pred(r',1);pred(p,1),pred(p',1);pred(q,1),pred(q',1)).
 
-object(a).
-isa(t,object(a)).
+obj(a).
+isa(t,obj(a)).
 
-init(s(concept(p,1),object(a);concept(q,1),object(a))).
+init(s(pred(p,1),obj(a);pred(q,1),obj(a))).
 
-rule_static(1).
+static(1).
 
-rule_head(rule_static(1),s(concept(r,1),variable(x))).
-rule_body(rule_static(1),s(concept(p,1),variable(x))).
-rule_body(rule_static(1),s(concept(q,1),variable(x))).
+rule_head(static(1),s(pred(r,1),var(x))).
+rule_body(static(1),s(pred(p,1),var(x))).
+rule_body(static(1),s(pred(q,1),var(x))).
 
 time(1).

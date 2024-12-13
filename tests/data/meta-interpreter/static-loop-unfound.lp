@@ -1,15 +1,15 @@
 %% expected: don't derive atoms in loop, i.e.
 %% UNSAT
 #include "defined.lp".
-concept((p;q;p';q'),1).
+pred((p;q;p';q'),1).
 isa(t,(p;q;p';q')).
-variable(x;y).
+var(x;y).
 isa(t,(x;y)).
-object(a).
+obj(a).
 isa(t,a).
 xor(p,p';q,q').
 
-rule_static(1;2).
+static(1;2).
 
 rule_head(1,s(p,x)).
 rule_body(1,s(q,x)).

@@ -1,28 +1,28 @@
 #include "defined.lp".
-concept((p;p';f;g;h),1).
-isa(t,concept((p;p';f;g;h),1)).
-variable(x).
-isa(t,variable(x)).
-object(a).
-isa(t,object(a)).
+pred((p;p';f;g;h),1).
+isa(t,pred((p;p';f;g;h),1)).
+var(x).
+isa(t,var(x)).
+obj(a).
+isa(t,obj(a)).
 
-xor(concept(p,1),concept(p',1);
-		concept(f,1),concept(g,1);
-		concept(g,1),concept(h,1)).
+xor(pred(p,1),pred(p',1);
+		pred(f,1),pred(g,1);
+		pred(g,1),pred(h,1)).
 
 time(1..3).
 
-init(s(concept(p,1),object(a))).
-init(s(concept(f,1),object(a))).
+init(s(pred(p,1),obj(a))).
+init(s(pred(f,1),obj(a))).
 
-rule_causal(1..2).
-rule_static(3).
+causal(1..2).
+static(3).
 
-rule_head(rule_causal(2),s(concept(h,1),variable(x))).
-rule_body(rule_causal(2),s(concept(g,1),variable(x))).
+rule_head(causal(2),s(pred(h,1),var(x))).
+rule_body(causal(2),s(pred(g,1),var(x))).
 
-rule_head(rule_causal(1),s(concept(g,1),variable(x))).
-rule_body(rule_causal(1),s(concept(f,1),variable(x))).
+rule_head(causal(1),s(pred(g,1),var(x))).
+rule_body(causal(1),s(pred(f,1),var(x))).
 
-rule_head(rule_static(3),s(concept(p',1),variable(x))).
-rule_body(rule_static(3),s(concept(h,1),variable(x))).
+rule_head(static(3),s(pred(p',1),var(x))).
+rule_body(static(3),s(pred(h,1),var(x))).

@@ -16,13 +16,13 @@ unfounded_subs(R,G,T,(V,O)) :- rule_head(R,U), atom_subs(U,G,(V,O)), hold(G,T).
 % justifying hold(G,T). Thus, in this case rule R cannot possibly
 % justify hold(G,T).
 unfounded(R,G,T)
-  :- R = rule_causal(_), time(T), not init_time(T),
+  :- R = causal(_), time(T), not init_time(T),
 		 rule_head(R,U), atom_subs(U,G,_),
 		 rule_body(R,UB), atom_subs(UB,GB,_),
 		 unfounded_subs(R,G,T,(V,O)): atom_subs(UB,GB,(V,O));
 		 not hold(GB,T-1).
 unfounded(R,G,T)
-  :- R = rule_static(_), time(T),
+  :- R = static(_), time(T),
 		 rule_head(R,U), atom_subs(U,G,_),
 		 rule_body(R,UB), atom_subs(UB,GB,_),
 		 unfounded_subs(R,G,T,(V,O)): atom_subs(UB,GB,(V,O));
@@ -31,7 +31,7 @@ unfounded(R,G,T)
 % It cannot be the case that an atom that holds in the initial time
 % step is not founded by being an init atom and also not founded by a static rule.
 :- hold(G,T), init_time(T), not init(G),
-	 unfounded(rule_static(R),G,T): rule_static(R), rule_head(rule_static(R),U), atom_subs(U,G,_).
+	 unfounded(static(R),G,T): static(R), rule_head(static(R),U), atom_subs(U,G,_).
 
 % It cannot be the case that an atom that holds in a non-initial time
 % step is not founded by inertia and also not founded by a causal rule.
