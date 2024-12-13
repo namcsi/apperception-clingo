@@ -34,12 +34,12 @@ sat_subs(R,(V,O)): subs(V,O) :-  rule_var(R,V).
 % 2. There is a substitution via sat_subs for a head atom
 % under which the head atom holds.
 % 1. case
-sat(rule_static(R),T)
-  :- rule_static(R), rule_body(rule_static(R),U), atom_subs(U,G,_), time(T), not hold(G,T),
-		 sat_subs(rule_static(R),(V,O)): atom_subs(U,G,(V,O)).
-sat(rule_causal(R),T)
-  :- rule_causal(R), rule_body(rule_causal(R),U), atom_subs(U,G,_), time(T), time(T-1), not hold(G,T-1),
-		 sat_subs(rule_causal(R),(V,O)): atom_subs(U,G,(V,O)).
+sat(R,T)
+  :- R = rule_static(_), rule_body(R,U), atom_subs(U,G,_), time(T), not hold(G,T),
+		 sat_subs(R,(V,O)): atom_subs(U,G,(V,O)).
+sat(R,T)
+  :- R = rule_causal(_), rule_body(R,U), atom_subs(U,G,_), time(T), time(T-1), not hold(G,T-1),
+		 sat_subs(R,(V,O)): atom_subs(U,G,(V,O)).
 % 2. case
 sat(R,T)
   :- rule_head(R,U), atom_subs(U,G,_), hold(G,T),

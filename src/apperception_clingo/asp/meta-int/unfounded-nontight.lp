@@ -2,18 +2,18 @@
 1 { less(G1,G2); less(G2,G1) } 1 :- ground_atom(G1), ground_atom(G2), G1 < G2, time(T).
 :- less(G1,G2), less(G2,G3), less(G3,G1).
 
-unfounded(rule_static(R),G,T)
-  :- rule_static(R), time(T),
-		 rule_head(rule_static(R),U), atom_subs(U,G,_),
-		 rule_body(rule_static(R),UB), atom_subs(UB,GB,_),
-		 unfounded_subs(rule_static(R),G,T,(V,O)): atom_subs(UB,GB,(V,O));
+unfounded(R,G,T)
+  :- R = rule_static(_), time(T),
+		 rule_head(R,U), atom_subs(U,G,_),
+		 rule_body(R,UB), atom_subs(UB,GB,_),
+		 unfounded_subs(R,G,T,(V,O)): atom_subs(UB,GB,(V,O));
 		 not less(GB,G).
 
 %% count_ground_atom(N) :- N = #count { G: ground_atom(G) }.
 %% 1 { perm(G,P,T): P=1..N } 1 :- ground_atom(G), time(T), count_ground_atom(N).
 
 %% unfounded(R,G,T)
-%%   :- rule_static(R), time(T),
+%%   :- R = rule_static(_), time(T),
 %% 		 rule_head(R,U), atom_subs(U,G,_),
 %% 		 rule_body(R,UB), atom_subs(UB,GB,_),
 %% 		 unfounded_subs(R,G,T,(V,O)): atom_subs(UB,GB,(V,O));

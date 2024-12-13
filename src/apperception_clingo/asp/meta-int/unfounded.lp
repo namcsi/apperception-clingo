@@ -15,17 +15,17 @@ unfounded_subs(R,G,T,(V,O)) :- rule_head(R,U), atom_subs(U,G,(V,O)), hold(G,T).
 % unfounded_subs(R,G,T,(V,O)) under which the rule is suitable for
 % justifying hold(G,T). Thus, in this case rule R cannot possibly
 % justify hold(G,T).
-unfounded(rule_causal(R),G,T)
-  :- rule_causal(R), time(T), not init_time(T),
-		 rule_head(rule_causal(R),U), atom_subs(U,G,_),
-		 rule_body(rule_causal(R),UB), atom_subs(UB,GB,_),
-		 unfounded_subs(rule_causal(R),G,T,(V,O)): atom_subs(UB,GB,(V,O));
+unfounded(R,G,T)
+  :- R = rule_causal(_), time(T), not init_time(T),
+		 rule_head(R,U), atom_subs(U,G,_),
+		 rule_body(R,UB), atom_subs(UB,GB,_),
+		 unfounded_subs(R,G,T,(V,O)): atom_subs(UB,GB,(V,O));
 		 not hold(GB,T-1).
-unfounded(rule_static(R),G,T)
-  :- rule_static(R), time(T),
-		 rule_head(rule_static(R),U), atom_subs(U,G,_),
-		 rule_body(rule_static(R),UB), atom_subs(UB,GB,_),
-		 unfounded_subs(rule_static(R),G,T,(V,O)): atom_subs(UB,GB,(V,O));
+unfounded(R,G,T)
+  :- R = rule_static(_), time(T),
+		 rule_head(R,U), atom_subs(U,G,_),
+		 rule_body(R,UB), atom_subs(UB,GB,_),
+		 unfounded_subs(R,G,T,(V,O)): atom_subs(UB,GB,(V,O));
 		 not hold(GB,T).
 
 % It cannot be the case that an atom that holds in the initial time
