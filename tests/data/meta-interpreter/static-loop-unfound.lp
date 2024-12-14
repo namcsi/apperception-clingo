@@ -7,7 +7,9 @@ var(x;y).
 isa(t,(x;y)).
 obj(a).
 isa(t,a).
-xor(p,p';q,q').
+xor(p,p';q,q';r,r').
+
+init(s(pred(r,1),obj(a))).
 
 static(1;2).
 

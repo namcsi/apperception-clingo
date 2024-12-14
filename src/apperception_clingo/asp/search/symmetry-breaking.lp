@@ -1,38 +1,43 @@
 % symmetry breaking for entity instantiation.
 %
 % Instantiation of entities from domains must happen in ascending
-% order of identifiers, without any gaps. We exclude inputs from this
-% constraint, as it could lead to unsat for valid solutions.
+% order of identifiers, without any gaps. We apply this constraint
+% only to generated entities, as otherwise it could lead to unsat for
+% valid inputs.
 
-:- causal_domain(X1), causal(X2), X1 < X2, not causal(X1).
-:- static_domain(X1), static(X2), X1 < X2, not static(X1).
+:- obj_domain(X1), not gen(obj(X1)), X1 < X2, gen(obj(X2)).
+:- unary_pred_domain(X1), not gen(pred(X1,1)), X1 < X2, gen(pred(X2,1)).
+:- binary_pred_domain(X1), not gen(pred(X1,2)), X1 < X2, gen(pred(X2,2)).
+:- causal_domain(X1), not causal(X1), X1 < X2, causal(X2).
+:- static_domain(X1), not static(X1), X1 < X2, static(X2).
 
 % Symmetry breaking for type assignment.
 %
-% The mapping from generated entities to their types must be
-% monotonic. We again exclude input entities.
-:- obj(O1), obj(O2), O1 < O2,
-   isa(T1,obj(O1)), isa(T2,obj(O2)), T2 < T1,
-	 not input(obj(O1)), not input(obj(O2)).
+% The mapping from generated entities to types must be
+% monotonic.
+:- gen(obj(O1)), gen(obj(O2)),
+	 isa(T1,obj(O1)), isa(T2,obj(O2)),
+	 O1 < O2, T2 < T1.
 
-:- pred(C1,1), pred(C2,1), C1 < C2,
-	 isa(T1,pred(C1,1)), isa(T2,pred(C2,2)), T2 < T1,
-	 not input(pred(C1,1)), not input(pred(C2,1)).
+:- gen(pred(P1,1)), gen(pred(P2,1)),
+	 isa(T1,pred(P1,1)), isa(T2,pred(P2,1)),
+	 P1 < P2, T2 < T1.
 
-:- pred(C1,2), pred(C2,2), C1 < C2,
-	 isa((T1,T2),pred(C1,2)), isa((T3,T4),pred(C2,2)), (T3,T4) < (T1,T2),
-	 not input(pred(C1,2)), not input(pred(C2,2)).
+:- gen(pred(P1,2)), gen(pred(P2,2)),
+	 isa((T1,T2),pred(P1,2)), isa((T3,T4),pred(P2,2)),
+	 (T3,T4) < (T1,T2).
 
-:- var(V1), var(V2), V1 < V2,
-	 isa(T1,var(V1)), isa(T2,var(V2)), T2 < T1,
-	 not input(var(V1)), not input(var(V2)).
+:- gen(var(V1)), gen(var(V2)),
+	 isa(T1,var(V1)), isa(T2,var(V2)),
+	 V1 < V2, T2 < T1.
 
 % Symmetry breaking for constructed rules.
 %
 % Variables of the same type occurring in a rule must be used in
 % ascending order with no gaps
+:- var(V1), var(V2), isa(T,V1), isa(T,V2),
+	 rule_var(R,V1), V2 < V1, not rule_var(R,V2).
 
-:- rule_var(R,V1), isa(T,V1), isa(T,V2), V2 < V1, not rule_var(R,V2).
 % We define a partial order over rules
 % We first order via head atom
 less_rule_head(static(R1),static(R2))

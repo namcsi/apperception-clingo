@@ -13,7 +13,8 @@ xor(pred(r,1),pred(r',1);pred(p,1),pred(p',1);pred(q,1),pred(q',1)).
 obj(a).
 isa(t,obj(a)).
 
-init(s(pred(p,1),obj(a);pred(q,1),obj(a))).
+init(s(pred(p,1),obj(a);
+			 pred(q,1),obj(a))).
 
 static(1).
 

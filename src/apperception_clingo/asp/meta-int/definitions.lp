@@ -6,16 +6,6 @@
 init_time(first_time_point).
 hold(G,T) :- init_time(T), init(G).
 
-% always instatiate input
-#defined input/1.
-type(T) :- input(type(T)).
-obj(O) :- input(obj(O)).
-isa(T,A) :- input(isa(T,A)).
-pred(C,Arity) :- input(pred(C,Arity)).
-xor(C1,C2) :- input(xor(C1,C2)).
-exist(C) :- input(exist(C)).
-var(V) :- input(var(V)).
-
 
 % construct unground atoms.
 unground_atom(s(C,V))
@@ -35,10 +25,6 @@ ground_atom(s2(C,O1,O2))
 
 % generate var substitutions.
 subs(V,O) :- V = var(_),  O = obj(_), isa(T,O), isa(T,V).
-atom_subs(s(C,V),s(C,O),(V,O)) :- unground_atom(s(C,V)), subs(V,O).
-atom_subs(s2(C,V1,V2),s2(C,O1,O2),((V1,O1);(V2,O2)))
-  :- unground_atom(s2(C,V1,V2)), V1 != V2, subs(V1,O1), subs(V2,O2).
-atom_subs(s2(C,V,V),s2(C,O,O),(V,O)) :- unground_atom(s2(C,V,V)), subs(V,O).
 
 % construct rules
 % Version with more symmetries but much less grounding
@@ -47,5 +33,3 @@ rule(static(R)) :- static(R).
 rule_body_var(R,V) :- rule_body(R,U), atom_var(U,V).
 rule_var(R,V) :- rule_body_var(R,V).
 rule_var(R,V) :- rule_head(R,U), atom_var(U,V).
-rule_ground_head(R,G) :- rule_head(R,U), atom_subs(U,G,_).
-rule_ground_body(R,G) :- rule_body(R,U), atom_subs(U,G,_).

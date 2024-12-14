@@ -10,11 +10,19 @@
 % O(|O|*|V|), so we can avoid the exponential blowup in grounding by
 % incurring a higher solving cost.
 
+#include "heuristic.lp".
+
+atom_subs(s(C,V),s(C,O),(V,O)) :- unground_atom(s(C,V)), subs(V,O).
+atom_subs(s2(C,V1,V2),s2(C,O1,O2),((V1,O1);(V2,O2)))
+  :- unground_atom(s2(C,V1,V2)), V1 != V2, subs(V1,O1), subs(V2,O2).
+atom_subs(s2(C,V,V),s2(C,O,O),(V,O)) :- unground_atom(s2(C,V,V)), subs(V,O).
+
 %
 % ---- Guess candidate solution from ground head atoms ----
 %
 { hold(G,T) } :- rule_head(_,U), atom_subs(U,G,_), time(T).
 { hold(G,T) } :- init(G), time(T).
+%% { hold(G,T) } :- time(T), ground_atom(G).
 hold(G,T) :- senses(G,T), time(T).
 
 %

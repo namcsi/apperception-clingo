@@ -12,13 +12,22 @@
 #const static_max = 0.
 #const rule_body_size_max = 0.
 
-type(1..gen_types).
-pred(1..gen_unary_preds,1).
-pred(1..gen_binary_preds,2).
-obj(1..gen_objs).
-var(1..gen_vars).
+obj_domain(1..gen_objs).
+unary_pred_domain(1..gen_unary_preds).
+binary_pred_domain(1..gen_binary_preds).
 causal_domain(1..causal_max).
 static_domain(1..static_max).
+
+gen(type(1..gen_types)).
+{gen(obj(O))} :- obj_domain(O).
+{gen(pred(P,1))} :- unary_pred_domain(P).
+{gen(pred(P,2))} :- binary_pred_domain(P).
+gen(var(1..gen_vars)).
+
+type(T) :- gen(type(T)).
+pred(P,A) :- gen(pred(P,A)).
+obj(O) :- gen(obj(O)).
+var(V) :- gen(var(V)).
 
 % choose to use rules
 { causal(R) } :- causal_domain(R).
