@@ -182,12 +182,12 @@ hidden(s(c_on, obj_cell_9), 14).
 hidden(s(c_off, obj_cell_10), 14).
 hidden(s(c_on, obj_cell_11), 14).
 
-obj(obj_cell_1;obj_cell_2;obj_cell_3;obj_cell_4;obj_cell_5;obj_cell_6;obj_cell_7;obj_cell_8;obj_cell_9;obj_cell_10;obj_cell_11).
+type(sensor).
+obj(obj_cell_1;obj_cell_2;obj_cell_3;obj_cell_4;obj_cell_5;obj_cell_6;
+		obj_cell_7;obj_cell_8;obj_cell_9;obj_cell_10;obj_cell_11).
+isa(sensor,(obj_cell_1;obj_cell_2;obj_cell_3;obj_cell_4;obj_cell_5;obj_cell_6;
+						obj_cell_7;obj_cell_8;obj_cell_9;obj_cell_10;obj_cell_11)).
 time(1..14).
-pred(c_on).
-pred(c_off).
+pred((c_on;c_off),1).
+isa(sensor,(c_on;c_off)).
 xor(c_on,c_off).
-
-% Input exclusions
-% Every sensor is either on or off
-% S : sensor → on(S) ⊕ off(S)
