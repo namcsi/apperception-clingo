@@ -45,6 +45,7 @@ var(V) :- gen(var(V)).
 
 % choose atoms that hold in the initial time step.
 { init(G) } :- ground_atom(G).
+init(G) :- senses(G,T), init_time(T).
 
 % choose rules
 1 { rule_head(R,U): unground_atom(U) } 1 :- rule(R).

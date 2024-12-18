@@ -1,4 +1,6 @@
-#include "../core.lp".
+#include "../definitions.lp".
+#include "../incompos.lp".
+#include "../unity.lp".
 
 :- senses(G,T), time(T), not hold(G,T).
 
