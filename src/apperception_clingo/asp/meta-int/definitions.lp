@@ -30,6 +30,10 @@ subs(V,O) :- V = var(_),  O = obj(_), isa(T,O), isa(T,V).
 % Version with more symmetries but much less grounding
 rule(causal(R)) :- causal(R).
 rule(static(R)) :- static(R).
+
 rule_body_var(R,V) :- rule_body(R,U), atom_var(U,V).
 rule_var(R,V) :- rule_body_var(R,V).
 rule_var(R,V) :- rule_head(R,U), atom_var(U,V).
+
+rule_delta(static(R),T,T) :- static(R), time(T).
+rule_delta(causal(R),T,T-1) :- causal(R), time(T), not init_time(T).

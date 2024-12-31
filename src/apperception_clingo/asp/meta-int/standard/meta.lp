@@ -28,27 +28,13 @@ hold_body(R,S,T)
 												   subs_group(S,(V2,O2)).
 
 hold(s(P,O),T)
-  :- R = static(_),
+  :- rule_delta(R,T,TB),
 		 rule_head(R,s(P,V)),
-		 hold_body(R,S,T),
+		 hold_body(R,S,TB),
 		 subs_group(S,(V,O)).
 
 hold(s2(P,O1,O2),T)
-  :- R = static(_),
+  :- rule_delta(R,T,TB),
 		 rule_head(R,s2(P,V1,V2)),
-		 hold_body(R,S,T),
+		 hold_body(R,S,TB),
 		 subs_group(S,(V1,O1)), subs_group(S,(V2,O2)).
-
-hold(s(P,O),T+1)
-  :- R = causal(_),
-		 rule_head(R,s(P,V)),
-		 hold_body(R,S,T),
-		 subs_group(S,(V,O)),
-     time(T+1).
-
-hold(s2(P,O1,O2),T+1)
-  :- R = causal(_),
-		 rule_head(R,s2(P,V1,V2)),
-		 hold_body(R,S,T),
-		 subs_group(S,(V1,O1)), subs_group(S,(V2,O2)),
-     time(T+1).

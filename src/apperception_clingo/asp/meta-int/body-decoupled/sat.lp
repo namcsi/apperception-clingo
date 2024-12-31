@@ -17,9 +17,6 @@ atom_subs(s2(C,V,V),s2(C,O,O),(V,O)) :- unground_atom(s2(C,V,V)), subs(V,O).
 
 rule_head_ground(R,G) :- rule_head(R,U), atom_subs(U,G,_).
 
-rule_delta(static(R),T,T) :- static(R), time(T).
-rule_delta(causal(R),T,T-1) :- causal(R), time(T), not init_time(T).
-
 %
 % ---- Guess candidate solution from ground head atoms ----
 %
