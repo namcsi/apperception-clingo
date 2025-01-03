@@ -3,7 +3,7 @@ Test cases for meta-interpreter for causal datalog.
 """
 
 from pathlib import Path
-from typing import List
+from typing import List, Literal
 from unittest import TestCase
 
 from clingo import Control
@@ -29,9 +29,13 @@ class TestMeta(TestCase):
 
     def assertModelEqual(
         self,
-        meta_interpreters: List[Path],
         input_file: Path,
-        result: List[str] | False,
+        result: List[str] | Literal[False],
+        meta_interpreters: List[Path] = [
+            encoding_dir / "body-decoupled" / "meta-tight.lp",
+            encoding_dir / "body-decoupled" / "meta-tight-reach.lp",
+            encoding_dir / "standard" / "meta.lp",
+        ],
         clingo_args: List[str] = clingo_args,
     ) -> None:
         """
@@ -59,10 +63,6 @@ class TestMeta(TestCase):
         Test the tight interpreter on tight static program.
         """
         self.assertModelEqual(
-            [
-                encoding_dir / "body-decoupled" / "meta-tight.lp",
-                encoding_dir / "standard" / "meta.lp",
-            ],
             meta_test_dir / "static-tight.lp",
             [
                 "hold(s(pred(p,1),obj(a)),1)",
@@ -76,7 +76,9 @@ class TestMeta(TestCase):
         Test the tight interpreter on a non-tight static program.
         """
         self.assertModelEqual(
-            [encoding_dir / "body-decoupled" / "meta-tight.lp"], meta_test_dir / "static-loop-found.lp", False
+            meta_test_dir / "static-loop-found.lp",
+            False,
+            meta_interpreters=[encoding_dir / "body-decoupled" / "meta-tight.lp"],
         )
 
     def test_nontight_static_loop_founded(self) -> None:
@@ -84,12 +86,12 @@ class TestMeta(TestCase):
         Test the nontight interpreter on non-tight static program with a founded loop.
         """
         self.assertModelEqual(
-            [
+            meta_test_dir / "static-loop-found.lp",
+            ["hold(s(pred(p,1),obj(a)),1)", "hold(s(pred(q,1),obj(a)),1)"],
+            meta_interpreters=[
                 encoding_dir / "body-decoupled" / "meta-nontight.lp",
                 encoding_dir / "standard" / "meta.lp",
             ],
-            meta_test_dir / "static-loop-found.lp",
-            ["hold(s(pred(p,1),obj(a)),1)", "hold(s(pred(q,1),obj(a)),1)"],
         )
 
     def test_nontight_static_loop_unfounded(self) -> None:
@@ -97,12 +99,12 @@ class TestMeta(TestCase):
         Test the nontight interpreter on non-tight static program with an unfounded loop.
         """
         self.assertModelEqual(
-            [
+            meta_test_dir / "static-loop-unfound.lp",
+            False,
+            meta_interpreters=[
                 encoding_dir / "body-decoupled" / "meta-nontight.lp",
                 encoding_dir / "standard" / "meta.lp",
             ],
-            meta_test_dir / "static-loop-unfound.lp",
-            False,
         )
 
     def test_causal(self) -> None:
@@ -110,10 +112,6 @@ class TestMeta(TestCase):
         Test the interpreter on a simple causal program.
         """
         self.assertModelEqual(
-            [
-                encoding_dir / "body-decoupled" / "meta-nontight.lp",
-                encoding_dir / "standard" / "meta.lp",
-            ],
             meta_test_dir / "causal.lp",
             [
                 "hold(s(pred(p,1),obj(a)),1)",
@@ -127,10 +125,6 @@ class TestMeta(TestCase):
         Test the interpreter on a program with causal rules, inertia and incompossibility.
         """
         self.assertModelEqual(
-            [
-                encoding_dir / "body-decoupled" / "meta-tight.lp",
-                encoding_dir / "standard" / "meta.lp",
-            ],
             meta_test_dir / "incompos-xor.lp",
             [
                 "hold(s(pred(f,1),obj(a)),1)",
@@ -147,10 +141,6 @@ class TestMeta(TestCase):
         Test the interpreter on a program with causal rules, inertia and incompossibility.
         """
         self.assertModelEqual(
-            [
-                encoding_dir / "body-decoupled" / "meta-tight.lp",
-                encoding_dir / "standard" / "meta.lp",
-            ],
             meta_test_dir / "incompos-exist.lp",
             [
                 "hold(s2(pred(q,2),obj(b),obj(c)),1)",
@@ -181,10 +171,6 @@ class TestMeta(TestCase):
         Test the interpreter on a unified interpretation example 6 given in the paper.
         """
         self.assertModelEqual(
-            [
-                encoding_dir / "body-decoupled" / "meta-tight.lp",
-                encoding_dir / "standard" / "meta.lp",
-            ],
             meta_test_dir / "paper-example6.lp",
             [
                 "hold(s2(pred(r,2),obj(a),obj(b)),1)",
@@ -255,10 +241,6 @@ class TestMeta(TestCase):
         Test the interpreter on a unified interpretation example 7 given in the paper.
         """
         self.assertModelEqual(
-            [
-                encoding_dir / "body-decoupled" / "meta-tight.lp",
-                encoding_dir / "standard" / "meta.lp",
-            ],
             meta_test_dir / "paper-example7.lp",
             [
                 "hold(s2(pred(r,2),obj(a),obj(b)),1)",

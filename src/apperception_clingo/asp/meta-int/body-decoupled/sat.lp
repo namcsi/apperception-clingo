@@ -1,6 +1,3 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% ---------------- Body-decoupled grounding via solving. ---------------- %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % We try to do body-decoupled grounding via solving to avoid the
 % exponential blowup of the meta-interpreter in the original paper, as
 % there all substitutions of all possible rules had to be computed,
@@ -10,12 +7,12 @@
 % O(|O|*|V|), so we can avoid the exponential blowup in grounding by
 % incurring a higher solving cost.
 
-atom_subs(s(C,V),s(C,O),(V,O)) :- unground_atom(s(C,V)), subs(V,O).
-atom_subs(s2(C,V1,V2),s2(C,O1,O2),((V1,O1);(V2,O2)))
+ground_subs(s(C,V),s(C,O),(V,O)) :- unground_atom(s(C,V)), subs(V,O).
+ground_subs(s2(C,V1,V2),s2(C,O1,O2),((V1,O1);(V2,O2)))
   :- unground_atom(s2(C,V1,V2)), V1 != V2, subs(V1,O1), subs(V2,O2).
-atom_subs(s2(C,V,V),s2(C,O,O),(V,O)) :- unground_atom(s2(C,V,V)), subs(V,O).
+ground_subs(s2(C,V,V),s2(C,O,O),(V,O)) :- unground_atom(s2(C,V,V)), subs(V,O).
 
-rule_head_ground(R,G) :- rule_head(R,U), atom_subs(U,G,_).
+rule_head_ground(R,G) :- rule_head(R,U), ground_subs(U,G,_).
 
 %
 % ---- Guess candidate solution from ground head atoms ----
@@ -44,14 +41,14 @@ sat_subs(R,(V,O)): subs(V,O) :-  rule_var(R,V).
 
 % 1. case
 sat(R,T)
-  :- rule_delta(R,T,TB), rule_body(R,U), atom_subs(U,G,_),
+  :- rule_delta(R,T,TB), rule_body(R,U), ground_subs(U,G,_),
 		 not hold(G,TB),
-		 sat_subs(R,(V,O)): atom_subs(U,G,(V,O)).
+		 sat_subs(R,(V,O)): ground_subs(U,G,(V,O)).
 
 % 2. case
 sat(R,T)
-  :- rule_head(R,U), atom_subs(U,G,_), hold(G,T),
-		 sat_subs(R,(V,O)): atom_subs(U,G,(V,O)).
+  :- rule_head(R,U), ground_subs(U,G,_), hold(G,T),
+		 sat_subs(R,(V,O)): ground_subs(U,G,(V,O)).
 
 % We have sat if for each rule and time point there is a satisfied
 % ground instantiation.
