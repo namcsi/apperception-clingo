@@ -1,0 +1,11 @@
+#show num_incorrect/1.
+#show rule_head/2.
+#show rule_body/2.
+#show xor/2.
+#show exist/1.
+#show init/1.
+#show isa/2.
+#show pred/2.
+#show obj/1.
+#show var/1.
+#show type/1.

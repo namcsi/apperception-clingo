@@ -32,6 +32,8 @@ class TestMeta(TestCase):
         input_file: Path,
         result: List[str] | Literal[False],
         meta_interpreters: List[Path] = [
+            encoding_dir / "body-decoupled" / "meta.lp",
+            encoding_dir / "body-decoupled" / "meta-reach.lp",
             encoding_dir / "body-decoupled" / "meta-tight.lp",
             encoding_dir / "body-decoupled" / "meta-tight-reach.lp",
             encoding_dir / "standard" / "meta.lp",
@@ -89,7 +91,7 @@ class TestMeta(TestCase):
             meta_test_dir / "static-loop-found.lp",
             ["hold(s(pred(p,1),obj(a)),1)", "hold(s(pred(q,1),obj(a)),1)"],
             meta_interpreters=[
-                encoding_dir / "body-decoupled" / "meta-nontight.lp",
+                encoding_dir / "body-decoupled" / "meta.lp",
                 encoding_dir / "standard" / "meta.lp",
             ],
         )
@@ -102,7 +104,7 @@ class TestMeta(TestCase):
             meta_test_dir / "static-loop-unfound.lp",
             False,
             meta_interpreters=[
-                encoding_dir / "body-decoupled" / "meta-nontight.lp",
+                encoding_dir / "body-decoupled" / "meta.lp",
                 encoding_dir / "standard" / "meta.lp",
             ],
         )

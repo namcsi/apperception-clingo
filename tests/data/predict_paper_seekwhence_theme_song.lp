@@ -41,6 +41,6 @@ time(1..17).
 
 % Every sensor senses a unique letter at each time point.
 
-exist(sense_l).
+exist(pred(sense_l,2)).
 
 % I have no idea how the system could solve this one...

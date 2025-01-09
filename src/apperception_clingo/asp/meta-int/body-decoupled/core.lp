@@ -1,5 +1,6 @@
-#include "../definitions.lp".
-#include "../incompos-body-decoupled.lp".
-#include "../unity.lp".
+#include "../common/definitions.lp".
+#include "../common/unity.lp".
+#include "incompos.lp".
+
 #include "sat.lp".
 #include "heuristic.lp".

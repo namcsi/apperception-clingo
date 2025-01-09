@@ -7,10 +7,10 @@
 #const gen_objs = 0.
 #const gen_unary_preds = 0.
 #const gen_binary_preds = 0.
-#const gen_vars = 0.
-#const causal_max = 0.
-#const static_max = 0.
-#const rule_body_size_max = 0.
+#const gen_vars = 2.
+#const causal_max = 1.
+#const static_max = 1.
+#const rule_body_size_max = 1.
 
 obj_domain(1..gen_objs).
 unary_pred_domain(1..gen_unary_preds).

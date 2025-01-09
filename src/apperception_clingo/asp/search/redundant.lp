@@ -1,4 +1,7 @@
+% choosing incompossible atoms as initial conditions
 :- init(G1), init(G2), G1 < G2, incomp_ground_atoms(ID,G1), incomp_ground_atoms(ID,G2).
+% suppress warning in body-decoupled case which does not define incomp_ground_atoms/2.
+#defined incomp_ground_atoms/2.
 
 % rule body can never be satisfied and is thus useless.
 :- rule_body(R,U1), rule_body(R,U2), U1 < U2, incomp_var_atoms(ID,U1),

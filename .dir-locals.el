@@ -17,7 +17,7 @@
                                                           :ignore [] ; string array: [] (default)
                                                           :indentSize nil ; integer: null (default)
                                                           :maxComplexity nil ; integer: null (default)
-                                                          :maxLineLength nil ; integer: null (default)
+                                                          :maxLineLength 120 ; integer: null (default)
                                                           :perFileIgnores [] ; string array: [] (default) e.g. ["file_path.py:W305,W304"]
                                                           :select nil) ; string array: null (default)
                                                  :jedi
