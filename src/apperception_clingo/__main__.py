@@ -2,17 +2,21 @@
 The main entry point for the application.
 """
 
+import json
 import sys
+import time
 from pathlib import Path
-from typing import Dict, Optional, Sequence
+from typing import Dict, List, Optional, Sequence, Union
 
 from clingo.application import Application, ApplicationOptions, clingo_main
 from clingo.control import Control
 from clingo.solving import Model
 from clingo.symbol import Symbol
 
-from .utils.logging import configure_logging, get_logger
-from .utils.parser import get_parser
+Frame = Dict[str, int]
+Interpretation = Dict[str, Dict[int, List[Symbol]]]
+SerializedInterpretation = Dict[str, Dict[int, List[str]]]
+Stat = Dict[str, Union[Frame, float, List[SerializedInterpretation]]]
 
 asp_files_dir = Path("src", "apperception_clingo", "asp")
 
@@ -37,7 +41,7 @@ class ApperceptionApp(Application):
     def __init__(self) -> None:
         """Initializes the application"""
         self._meta_interpreter = asp_files_dir / "meta-int" / "standard" / "meta.lp"
-        self._init_frame: Dict[str, int] = {
+        self._init_frame: Frame = {
             "gen_types": 0,
             "gen_objs": 0,
             "gen_unary_preds": 0,
@@ -47,7 +51,7 @@ class ApperceptionApp(Application):
             "rule_body_size_max": 1,
             "gen_vars": 2,
         }
-        self._frame_deltas: Dict[str, int] = {
+        self._frame_deltas: Frame = {
             "gen_objs": 2,
             "gen_unary_preds": 1,
             "gen_binary_preds": 1,
@@ -60,6 +64,14 @@ class ApperceptionApp(Application):
         self._max_iterations = 20
         self.upper_bound: Optional[int] = None
         self.opt_model: Sequence[Symbol] = []
+        self.start_time = time.time()
+        self.stats: List[Stat] = []
+        self._json_path: Optional[Path] = None
+
+    def _write_stats(self) -> None:
+        if self._json_path is not None:
+            with self._json_path.open("w", encoding="utf-8") as f:
+                json.dump(self.stats, f)
 
     def _parse_meta_interpreter(self, value: str) -> bool:
         meta_interpreter_name = value.strip()
@@ -91,6 +103,10 @@ class ApperceptionApp(Application):
         except ValueError as e:
             raise ValueError(error_msg) from e
         self._init_frame.update({const_name: int_val})
+        return True
+
+    def _parse_file_string(self, value: str) -> bool:
+        self._json_path = Path(value)
         return True
 
     def register_options(self, options: ApplicationOptions):
@@ -133,51 +149,43 @@ class ApperceptionApp(Application):
             self._parse_search_const,
             multi=True,
         )
+        options.add(
+            group, "json-log-file,j", "Save information about solving in given json file.", self._parse_file_string
+        )
 
     def on_model(self, model: Model):
+        model_found_time = time.time()
         self.upper_bound = model.cost[0] - 1
         opt_model = model.symbols(shown=True)
-        types = []
-        objects = []
-        variables = []
-        predicates = []
-        signatures = []
-        constraints = []
-        rule_heads = []
-        rule_bodies = []
-        inits = []
-        num_incorrect: int
+        signatures = [
+            ("type", 1),
+            ("obj", 1),
+            ("var", 1),
+            ("pred", 2),
+            ("isa", 2),
+            ("xor", 2),
+            ("exist", 1),
+            ("rule_head", 2),
+            ("rule_body", 2),
+            ("init", 1),
+            ("num_incorrect", 1),
+        ]
+        sig_dict: Interpretation = {name: {arity: []} for name, arity in signatures}
         for symb in opt_model:
-            if symb.match("obj", 1):
-                objects.append(symb)
-            elif symb.match("var", 1):
-                variables.append(symb)
-            elif symb.match("pred", 2):
-                predicates.append(symb)
-            elif symb.match("type", 1):
-                types.append(symb)
-            elif symb.match("isa", 2):
-                signatures.append(symb)
-            elif symb.match("xor", 2) or symb.match("exist", 1):
-                constraints.append(symb)
-            elif symb.match("rule_head", 2):
-                rule_heads.append(symb)
-            elif symb.match("rule_body", 2):
-                rule_bodies.append(symb)
-            elif symb.match("init", 1):
-                inits.append(symb)
-            elif symb.match("num_incorrect", 1):
-                num_incorrect = symb.arguments[0].number
-        isa_dict = {isa.arguments[1]: isa.arguments[0] for isa in signatures}
+            for name, arity in signatures:
+                if symb.match(name, arity):
+                    sig_dict[name][arity].append(symb)
+        num_incorrect = sig_dict["num_incorrect"][1][0].arguments[0]
+        isa_dict = {isa.arguments[1]: isa.arguments[0] for isa in sig_dict["isa"][2]}
         separator = " "
         rules = []
-        for rule_head in rule_heads:
+        for rule_head in sig_dict["rule_head"][2]:
             rule_id = rule_head.arguments[0]
             rule_head_str = str(rule_head.arguments[1])
             rule_body = []
             arrow = " ::- " if rule_id.match("causal", 1) else " :- "
             rule = rule_head_str + arrow
-            for body in rule_bodies:
+            for body in sig_dict["rule_body"][2]:
                 if body.arguments[0] == rule_id:
                     rule_body.append(body)
             rule += ", ".join([str(s.arguments[1]) for s in rule_body])
@@ -188,22 +196,36 @@ class ApperceptionApp(Application):
             f"Number of incorrectly predicted hidden states: {num_incorrect}."
         )
         print("Types:")
-        print(separator.join([str(s) for s in types]))
+        print(separator.join([str(s) for s in sig_dict["type"][1]]))
         print("Objects:")
-        print(separator.join([f"{symb}:{isa_dict[symb]}" for symb in objects]))
+        print(separator.join([f"{symb}:{isa_dict[symb]}" for symb in sig_dict["obj"][1]]))
         print("Variables:")
-        print(separator.join([f"{symb}:{isa_dict[symb]}" for symb in variables]))
+        print(separator.join([f"{symb}:{isa_dict[symb]}" for symb in sig_dict["var"][1]]))
         print("Predicates:")
-        print(separator.join([f"{symb}:{isa_dict[symb]}" for symb in predicates]))
+        print(separator.join([f"{symb}:{isa_dict[symb]}" for symb in sig_dict["pred"][2]]))
         print("Constraints:")
-        print(separator.join([str(s) for s in constraints]))
+        print(separator.join([str(s) for s in sig_dict["xor"][2]]))
+        print(separator.join([str(s) for s in sig_dict["exist"][1]]))
         print("Initial State:")
-        print(separator.join([str(s.arguments[0]) for s in inits]))
+        print(separator.join([str(s.arguments[0]) for s in sig_dict["init"][1]]))
         print("Rules:")
         print("\n".join(rules))
         print("----------------------------------------------------------")
+        # serialize model to file
+        serialized = {
+            name: {arity: [str(symb) for symb in symbs] for arity, symbs in arity2symb.items()}
+            for name, arity2symb in sig_dict.items()
+        }
+        serialized["rules"] = rules
+        serialized["cost"] = model.cost[0]
+        serialized["time"] = model_found_time - self.start_time
+        self.stats[-1]["unified_interpretations"].append(serialized)
+        self._write_stats()
 
-    def run_engine(self, files: Sequence[str], frame: Dict[str, int]):
+    def run_engine(self, files: Sequence[str], frame: Frame):
+        frame_cpy = frame.copy()
+        stat: Stat = {"frame": frame_cpy, "unified_interpretations": []}
+        self.stats.append(stat)
         bound_str = f",{self.upper_bound}" if self.upper_bound is not None else ""
         ctl = Control(["--opt-mode=opt" + bound_str])
         for f in files:
@@ -213,49 +235,48 @@ class ApperceptionApp(Application):
             const_str += f"#const {const} = {val}. [override]\n"
         ctl.add(const_str)
         ctl.ground()
+        ground_end_time = time.time() - self.start_time
+        stat["ground_end"] = ground_end_time
+        print(f"Grounding of frame finished at {ground_end_time:.4f}s")
+        self._write_stats()
         ctl.solve(on_model=self.on_model)
+        solve_end_time = time.time() - self.start_time
+        stat["solve_end"] = solve_end_time
+        print(f"Solving of frame finished in {solve_end_time:.4f}s")
+        self._write_stats()
 
     def main(self, control: Control, files: Sequence[str]):
         interp_files = [asp_files_dir / "search" / "core.lp", self._meta_interpreter]
         all_files = list(files) + [str(f) for f in interp_files]
         i = 1
         new_type = 1
-        try:
-            frames = [self._init_frame.copy()]
-            self.run_engine(all_files, frames[0])
-            while i < self._max_iterations:
-                for frame in frames:
-                    while True:
-                        for key, val in self._frame_deltas.items():
-                            frame[key] += val
-                            print(f"Processing Frame:\n{frame}")
-                            self.run_engine(all_files, frame)
-                        i += 1
-                        if i % self._switch_frame_at_iter == 0:
-                            break
-                new_frame = self._init_frame.copy()
-                new_frame["gen_types"] = new_type
-                new_type += 1
-                frames.append(new_frame)
-        except KeyboardInterrupt:
-            print("SEARCH INTERRUPTED")
+        frames = [self._init_frame.copy()]
+        self.run_engine(all_files, frames[0])
+        while i < self._max_iterations:
+            for frame in frames:
+                while True:
+                    for key, val in self._frame_deltas.items():
+                        frame[key] += val
+                        print(f"Processing Frame:\n{frame}")
+                        self.run_engine(all_files, frame)
+                    i += 1
+                    if i % self._switch_frame_at_iter == 0:
+                        break
+            new_frame = self._init_frame.copy()
+            new_frame["gen_types"] = new_type
+            new_type += 1
+            frames.append(new_frame)
 
 
 def main() -> None:
     """
     Run the main function.
     """
-    clingo_main(ApperceptionApp(), sys.argv[1:])
-
-    # parser = get_parser()
-    # args = parser.parse_args()
-    # configure_logging(sys.stderr, args.log, sys.stderr.isatty())
-
-    # log = get_logger("main")
-    # log.info("info")
-    # log.warning("warning")
-    # log.debug("debug")
-    # log.error("error")
+    app = ApperceptionApp()
+    try:
+        clingo_main(app, sys.argv[1:])
+    except:
+        raise ValueError
 
 
 if __name__ == "__main__":
