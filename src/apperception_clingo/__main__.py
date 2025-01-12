@@ -8,7 +8,7 @@ import time
 from pathlib import Path
 from typing import Dict, List, Optional, Sequence, Union
 
-from clingo.application import Application, ApplicationOptions, clingo_main
+from clingo.application import Application, ApplicationOptions, clingo_main, Flag
 from clingo.control import Control
 from clingo.solving import Model
 from clingo.symbol import Symbol
@@ -67,6 +67,7 @@ class ApperceptionApp(Application):
         self.start_time = time.time()
         self.stats: List[Stat] = []
         self._json_path: Optional[Path] = None
+        self._quiet = True
 
     def _write_stats(self) -> None:
         if self._json_path is not None:
@@ -116,7 +117,7 @@ class ApperceptionApp(Application):
             "meta-interpreter,m",
             "Set meta-interpreter to be used during search for optimal unified interpretation. "
             "Valid values are:\nstd : standard meta-interpreter\n"
-            "db : body-decoupled meta-interpreter\n"
+            "bd : body-decoupled meta-interpreter\n"
             "bd-reach : body-decoupled meta-interpreter with unfoundedness check optimization "
             "based on variable reachability\n"
             "bd-tight : body-decoupled meta-interpreter for tight programs\n"
@@ -190,27 +191,28 @@ class ApperceptionApp(Application):
                     rule_body.append(body)
             rule += ", ".join([str(s.arguments[1]) for s in rule_body])
             rules.append(rule)
-        print(
-            "-----------------------------------------------------------\n"
-            f"Found unified interpretation with cost {model.cost[0]}. "
-            f"Number of incorrectly predicted hidden states: {num_incorrect}."
-        )
-        print("Types:")
-        print(separator.join([str(s) for s in sig_dict["type"][1]]))
-        print("Objects:")
-        print(separator.join([f"{symb}:{isa_dict[symb]}" for symb in sig_dict["obj"][1]]))
-        print("Variables:")
-        print(separator.join([f"{symb}:{isa_dict[symb]}" for symb in sig_dict["var"][1]]))
-        print("Predicates:")
-        print(separator.join([f"{symb}:{isa_dict[symb]}" for symb in sig_dict["pred"][2]]))
-        print("Constraints:")
-        print(separator.join([str(s) for s in sig_dict["xor"][2]]))
-        print(separator.join([str(s) for s in sig_dict["exist"][1]]))
-        print("Initial State:")
-        print(separator.join([str(s.arguments[0]) for s in sig_dict["init"][1]]))
-        print("Rules:")
-        print("\n".join(rules))
-        print("----------------------------------------------------------")
+        if not self._quiet:
+            print(
+                "-----------------------------------------------------------\n"
+                f"Found unified interpretation with cost {model.cost[0]}. "
+                f"Number of incorrectly predicted hidden states: {num_incorrect}."
+            )
+            print("Types:")
+            print(separator.join([str(s) for s in sig_dict["type"][1]]))
+            print("Objects:")
+            print(separator.join([f"{symb}:{isa_dict[symb]}" for symb in sig_dict["obj"][1]]))
+            print("Variables:")
+            print(separator.join([f"{symb}:{isa_dict[symb]}" for symb in sig_dict["var"][1]]))
+            print("Predicates:")
+            print(separator.join([f"{symb}:{isa_dict[symb]}" for symb in sig_dict["pred"][2]]))
+            print("Constraints:")
+            print(separator.join([str(s) for s in sig_dict["xor"][2]]))
+            print(separator.join([str(s) for s in sig_dict["exist"][1]]))
+            print("Initial State:")
+            print(separator.join([str(s.arguments[0]) for s in sig_dict["init"][1]]))
+            print("Rules:")
+            print("\n".join(rules))
+            print("----------------------------------------------------------")
         # serialize model to file
         serialized = {
             name: {arity: [str(symb) for symb in symbs] for arity, symbs in arity2symb.items()}
@@ -237,12 +239,14 @@ class ApperceptionApp(Application):
         ctl.ground()
         ground_end_time = time.time() - self.start_time
         stat["ground_end"] = ground_end_time
-        print(f"Grounding of frame finished at {ground_end_time:.4f}s")
+        if not self._quiet:
+            print(f"Grounding of frame finished at {ground_end_time:.4f}s")
         self._write_stats()
         ctl.solve(on_model=self.on_model)
         solve_end_time = time.time() - self.start_time
         stat["solve_end"] = solve_end_time
-        print(f"Solving of frame finished in {solve_end_time:.4f}s")
+        if not self._quiet:
+            print(f"Solving of frame finished in {solve_end_time:.4f}s")
         self._write_stats()
 
     def main(self, control: Control, files: Sequence[str]):
@@ -257,7 +261,8 @@ class ApperceptionApp(Application):
                 while True:
                     for key, val in self._frame_deltas.items():
                         frame[key] += val
-                        print(f"Processing Frame:\n{frame}")
+                        if not self._quiet:
+                            print(f"Processing Frame:\n{frame}")
                         self.run_engine(all_files, frame)
                     i += 1
                     if i % self._switch_frame_at_iter == 0:
