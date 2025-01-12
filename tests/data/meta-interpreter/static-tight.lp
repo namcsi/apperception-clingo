@@ -5,13 +5,13 @@
 #include "defined.lp".
 type(t).
 pred((p;q;r;p';q';r'),1).
-isa(t,pred((p;q;r;p';q';r'),1)).
+isa(type(t),pred((p;q;r;p';q';r'),1)).
 var(x).
-isa(t,var(x)).
+isa(type(t),var(x)).
 xor(pred(r,1),pred(r',1);pred(p,1),pred(p',1);pred(q,1),pred(q',1)).
 
 obj(a).
-isa(t,obj(a)).
+isa(type(t),obj(a)).
 
 init(s(pred(p,1),obj(a);
 			 pred(q,1),obj(a))).

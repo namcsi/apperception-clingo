@@ -34,10 +34,10 @@ var(V) :- gen(var(V)).
 { static(R) } :- static_domain(R).
 
 % choose type signatures for entities
-1 { isa(T,obj(O)): type(T) } 1 :- obj(O).
-1 { isa(T,pred(C,1)): type(T) } 1 :- pred(C,1).
-1 { isa((T1,T2),pred(C,2)): type(T1), type(T2) } 1 :- pred(C,2).
-1 { isa(T,var(V)): type(T) } 1 :- var(V).
+1 { isa(type(T),obj(O)): type(T) } 1 :- obj(O).
+1 { isa(type(T),pred(C,1)): type(T) } 1 :- pred(C,1).
+1 { isa((type(T1),type(T2)),pred(C,2)): type(T1), type(T2) } 1 :- pred(C,2).
+1 { isa(type(T),var(V)): type(T) } 1 :- var(V).
 
 % choose xor and exist constraints
 { xor(C1,C2): C2 = pred(_,A), isa(T,C2), C1 < C2 } :- C1 = pred(_,A), isa(T,C1).

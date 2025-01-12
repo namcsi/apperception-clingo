@@ -5,14 +5,14 @@ pred((r;q),2).
 var(x;y;z).
 obj(a;b;c).
 
-isa(t,obj(a)).
-isa(u,obj(b;c)).
-isa(t,var(x)).
-isa(u,var(y;z)).
-isa(u,pred((f;g;h),1)).
+isa(type(t),obj(a)).
+isa(type(u),obj(b;c)).
+isa(type(t),var(x)).
+isa(type(u),var(y;z)).
+isa(type(u),pred((f;g;h),1)).
 
-isa((t,u),pred(r,2)).
-isa((u,u),pred(q,2)).
+isa((type(t),type(u)),pred(r,2)).
+isa((type(u),type(u)),pred(q,2)).
 
 xor(pred(f,1),pred(g,1);pred(g,1),pred(h,1)).
 exist(pred(r,2);pred(q,2)).

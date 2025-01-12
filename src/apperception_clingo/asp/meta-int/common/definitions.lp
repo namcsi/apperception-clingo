@@ -2,10 +2,6 @@
 %% -------------------- Definitions -------------------- %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-#const first_time_point = 1.
-init_time(first_time_point).
-hold(G,T) :- init_time(T), init(G).
-
 
 % construct unground atoms.
 unground_atom(s(C,V))
@@ -27,7 +23,6 @@ ground_atom(s2(C,O1,O2))
 subs(V,O) :- V = var(_),  O = obj(_), isa(T,O), isa(T,V).
 
 % construct rules
-% Version with more symmetries but much less grounding
 rule(causal(R)) :- causal(R).
 rule(static(R)) :- static(R).
 
@@ -37,3 +32,7 @@ rule_var(R,V) :- rule_head(R,U), atom_var(U,V).
 
 rule_delta(static(R),T,T) :- static(R), time(T).
 rule_delta(causal(R),T,T-1) :- causal(R), time(T), not init_time(T).
+
+#const first_time_point = 1.
+init_time(first_time_point).
+hold(G,T) :- init_time(T), init(G).

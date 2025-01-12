@@ -2,11 +2,11 @@
 %% UNSAT
 #include "defined.lp".
 pred((p;q;p';q'),1).
-isa(t,(p;q;p';q')).
+isa(type(t),(p;q;p';q')).
 var(x;y).
-isa(t,(x;y)).
+isa(type(t),(x;y)).
 obj(a).
-isa(t,a).
+isa(type(t),a).
 xor(p,p';q,q';r,r').
 
 init(s(pred(r,1),obj(a))).

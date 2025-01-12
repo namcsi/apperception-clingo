@@ -3,14 +3,14 @@
 
 type(sensor).
 pred((on;off),1).
-isa(sensor,pred((on;off),1)).
+isa(type(sensor),pred((on;off),1)).
 pred(r,2).
-isa((sensor,sensor),pred(r,2)).
+isa((type(sensor),type(sensor)),pred(r,2)).
 
 var(x;y).
-isa(sensor,var(x;y)).
+isa(type(sensor),var(x;y)).
 obj(a;b;c).
-isa(sensor,obj(a;b;c)).
+isa(type(sensor),obj(a;b;c)).
 
 xor(pred(on,1),pred(off,1)).
 exist(pred(r,2)).

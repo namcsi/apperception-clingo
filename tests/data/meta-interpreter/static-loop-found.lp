@@ -3,11 +3,11 @@
 %% hold(s(q,a),1).
 #include "defined.lp".
 pred((q;p;q';p'),1).
-isa(t,pred((q;p;q';p'),1)).
+isa(type(t),pred((q;p;q';p'),1)).
 var(x;y).
-isa(t,var(x;y)).
+isa(type(t),var(x;y)).
 obj(a).
-isa(t,obj(a)).
+isa(type(t),obj(a)).
 xor(pred(p,1),pred(p',1);pred(q,1),pred(q',1)).
 
 time(1).

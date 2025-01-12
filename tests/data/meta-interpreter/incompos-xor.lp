@@ -1,10 +1,10 @@
 #include "defined.lp".
 pred((p;p';f;g;h),1).
-isa(t,pred((p;p';f;g;h),1)).
+isa(type(t),pred((p;p';f;g;h),1)).
 var(x).
-isa(t,var(x)).
+isa(type(t),var(x)).
 obj(a).
-isa(t,obj(a)).
+isa(type(t),obj(a)).
 
 xor(pred(p,1),pred(p',1);
 		pred(f,1),pred(g,1);

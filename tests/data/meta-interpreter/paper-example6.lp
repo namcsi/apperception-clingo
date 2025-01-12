@@ -3,15 +3,15 @@
 
 type(sensor).
 pred((p1;p2;p3),1).
-isa(sensor,pred((p1;p2;p3),1)).
+isa(type(sensor),pred((p1;p2;p3),1)).
 pred((on;off),1).
-isa(sensor,pred((on;off),1)).
+isa(type(sensor),pred((on;off),1)).
 pred(r,2).
-isa((sensor,sensor),pred(r,2)).
+isa((type(sensor),type(sensor)),pred(r,2)).
 var(x;y).
-isa(sensor,var(x;y)).
+isa(type(sensor),var(x;y)).
 obj(a;b).
-isa(sensor,obj(a;b)).
+isa(type(sensor),obj(a;b)).
 
 xor(pred(p1,1),pred(p2,1);
 		pred(p2,1),pred(p3,1);
