@@ -3,6 +3,11 @@
 % suppress warning in body-decoupled case which does not define incomp_ground_atoms/2.
 #defined incomp_ground_atoms/2.
 
+incomp_var_atoms((CR,V),s(C,V))
+  :- C = pred(_,1), xor_repr(C,CR), unground_atom(s(C,V)).
+incomp_var_atoms((CR,V1,V2),s2(C,V1,V2))
+  :- C = pred(_,2), xor_repr(C,CR), unground_atom(s2(C,V1,V2)).
+
 % rule body can never be satisfied and is thus useless.
 :- rule_body(R,U1), rule_body(R,U2), U1 < U2, incomp_var_atoms(ID,U1),
 	 incomp_var_atoms(ID,U2).

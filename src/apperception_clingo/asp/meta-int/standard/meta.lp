@@ -5,10 +5,6 @@
 
 :- senses(G,T), time(T), not hold(G,T).
 
-%% first(var(0)) :- gen(var(0)).
-%% input(var(V)) :- var(V), not gen(var(V)).
-%% first(var(V)) :- var(V), V = #min{ V': var(V') }.
-%% last_input(var(V)) :- var(V), V = #max{ V': var(V') }.
 position(var(V),P) :- var(V), P = #count{ V': var(V'), V' <= V }.
 
 subs_group(((var(V),O),())) :- subs(var(V),O), position(var(V),1).
