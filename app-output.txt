@@ -1,0 +1,443 @@
+⬢[amicsi@toolbox apperception]$ 
+timeout 3600 solve misc predict_example.lp;
+timeout 3600 solve sw predict_3.lp;
+timeout 3600 solve eca predict_110_b5_t14.lp
+⬢[amicsi@toolbox apperception]$ Solving misc predict_example.lp
+Generating temporary files...
+Generated temp/misc_predict_example_init.lp
+Generated temp/misc_predict_example_subs.lp
+Generated temp/misc_predict_example_var_atoms.lp
+Generated temp/misc_predict_example_interpretation.lp
+Generated temp/misc_predict_example_script.sh
+Calling clingo...
+Processing data/misc/predict_example.lp.
+-------------
+Answer
+-------------
+
+
+Initial conditions
+------------------
+
+s(c_on,obj_sensor_a)
+s(c_on,obj_sensor_b)
+s(c_p3,obj_sensor_a)
+s(c_p3,obj_sensor_b)
+
+Permanents
+----------
+
+isa2(p_r,obj_sensor_a,obj_sensor_b)
+isa2(p_r,obj_sensor_b,obj_sensor_b)
+
+Rules
+-----
+
+
+Constraints
+-----------
+
+c_on+c_off
+c_p1+c_p2+c_p3
+
+Trace
+-----
+
+Time 1: 
+s(c_on, obj_sensor_a)
+s(c_on, obj_sensor_b)
+s(c_p3, obj_sensor_a)
+s(c_p3, obj_sensor_b)
+
+Time 2: 
+s(c_on, obj_sensor_a)
+s(c_on, obj_sensor_b)
+s(c_p3, obj_sensor_a)
+s(c_p3, obj_sensor_b)
+
+Time 3: 
+s(c_on, obj_sensor_a)
+s(c_on, obj_sensor_b)
+s(c_p3, obj_sensor_a)
+s(c_p3, obj_sensor_b)
+
+Time 4: 
+s(c_on, obj_sensor_a)
+s(c_on, obj_sensor_b)
+s(c_p3, obj_sensor_a)
+s(c_p3, obj_sensor_b)
+
+Time 5: 
+s(c_on, obj_sensor_a)
+s(c_on, obj_sensor_b)
+s(c_p3, obj_sensor_a)
+s(c_p3, obj_sensor_b)
+
+Time 6: 
+s(c_on, obj_sensor_a)
+s(c_on, obj_sensor_b)
+s(c_p3, obj_sensor_a)
+s(c_p3, obj_sensor_b)
+
+Time 7: 
+s(c_on, obj_sensor_a)
+s(c_on, obj_sensor_b)
+s(c_p3, obj_sensor_a)
+s(c_p3, obj_sensor_b)
+
+Time 8: 
+s(c_on, obj_sensor_a)
+s(c_on, obj_sensor_b)
+s(c_p3, obj_sensor_a)
+s(c_p3, obj_sensor_b)
+
+Time 9: 
+s(c_on, obj_sensor_a)
+s(c_on, obj_sensor_b)
+s(c_p3, obj_sensor_a)
+s(c_p3, obj_sensor_b)
+
+Time 10: 
+s(c_on, obj_sensor_a)
+s(c_on, obj_sensor_b)
+s(c_p3, obj_sensor_a)
+s(c_p3, obj_sensor_b)
+
+
+Statistics
+----------
+
+Num arrow rules: 0
+Num causes rules: 0
+Total body atoms: 0
+Num inits: 6
+Total cost: 6
+Total num clauses: 6
+
+
+
+Accuracy
+--------
+
+Status: incorrect
+
+Percentage accurate: NaN
+
+Optimization: 10
+⬢[amicsi@toolbox apperception]$ Solving sw predict_3.lp
+Num objects: 1 complexity: simple
+Generating temporary files...
+Generated temp/sw_predict_3_init.lp
+Generated temp/sw_predict_3_subs.lp
+Generated temp/sw_predict_3_var_atoms.lp
+Generated temp/sw_predict_3_interpretation.lp
+Generated temp/sw_predict_3_script.sh
+Calling clingo...
+Processing data/sw/predict_3.lp.
+No solution found for this configuration
+
+Num objects: 2 complexity: simple
+Generating temporary files...
+Generated temp/sw_predict_3_init.lp
+Generated temp/sw_predict_3_subs.lp
+Generated temp/sw_predict_3_var_atoms.lp
+Generated temp/sw_predict_3_interpretation.lp
+Generated temp/sw_predict_3_script.sh
+Calling clingo...
+Processing data/sw/predict_3.lp.
+No solution found for this configuration
+
+Num objects: 3 complexity: simple
+Generating temporary files...
+Generated temp/sw_predict_3_init.lp
+Generated temp/sw_predict_3_subs.lp
+Generated temp/sw_predict_3_var_atoms.lp
+Generated temp/sw_predict_3_interpretation.lp
+Generated temp/sw_predict_3_script.sh
+Calling clingo...
+Processing data/sw/predict_3.lp.
+*** Info : (clingo): INTERRUPTED by signal!
+⬢[amicsi@toolbox apperception]$ Solving eca predict_110_b5_t14.lp
+Using 0 causes rules
+Generating temporary files...
+Generated temp/eca_predict_110_b5_t14_init.lp
+Generated temp/eca_predict_110_b5_t14_subs.lp
+Generated temp/eca_predict_110_b5_t14_var_atoms.lp
+Generated temp/eca_predict_110_b5_t14_interpretation.lp
+Generated temp/eca_predict_110_b5_t14_script.sh
+Calling clingo...
+Processing data/eca/predict_110_b5_t14.lp.
+No solution found for this configuration
+
+Using 1 causes rules
+Generating temporary files...
+Generated temp/eca_predict_110_b5_t14_init.lp
+Generated temp/eca_predict_110_b5_t14_subs.lp
+Generated temp/eca_predict_110_b5_t14_var_atoms.lp
+Generated temp/eca_predict_110_b5_t14_interpretation.lp
+Generated temp/eca_predict_110_b5_t14_script.sh
+Calling clingo...
+Processing data/eca/predict_110_b5_t14.lp.
+No solution found for this configuration
+
+Using 2 causes rules
+Generating temporary files...
+Generated temp/eca_predict_110_b5_t14_init.lp
+Generated temp/eca_predict_110_b5_t14_subs.lp
+Generated temp/eca_predict_110_b5_t14_var_atoms.lp
+Generated temp/eca_predict_110_b5_t14_interpretation.lp
+Generated temp/eca_predict_110_b5_t14_script.sh
+Calling clingo...
+Processing data/eca/predict_110_b5_t14.lp.
+-------------
+Answer
+-------------
+
+
+Initial conditions
+------------------
+
+s(c_off,obj_cell_1)
+s(c_off,obj_cell_10)
+s(c_off,obj_cell_11)
+s(c_off,obj_cell_2)
+s(c_off,obj_cell_3)
+s(c_off,obj_cell_4)
+s(c_off,obj_cell_5)
+s(c_off,obj_cell_7)
+s(c_off,obj_cell_8)
+s(c_off,obj_cell_9)
+s(c_on,obj_cell_6)
+
+Permanents
+----------
+
+isa2(p_r,obj_cell_1,obj_cell_11)
+isa2(p_r,obj_cell_10,obj_cell_9)
+isa2(p_r,obj_cell_11,obj_cell_10)
+isa2(p_r,obj_cell_2,obj_cell_1)
+isa2(p_r,obj_cell_3,obj_cell_2)
+isa2(p_r,obj_cell_4,obj_cell_3)
+isa2(p_r,obj_cell_5,obj_cell_4)
+isa2(p_r,obj_cell_6,obj_cell_5)
+isa2(p_r,obj_cell_7,obj_cell_7)
+isa2(p_r,obj_cell_8,obj_cell_7)
+isa2(p_r,obj_cell_9,obj_cell_8)
+
+Rules
+-----
+
+r1 : isa2(p_r,var_s,var_s3) /\ isa2(p_r,var_s2,var_s) /\ s(c_on,var_s) /\ s(c_on,var_s2) /\ s(c_on,var_s3) >> s(c_off, var_s)
+r2 : isa2(p_r,var_s2,var_s) /\ s(c_off,var_s) /\ s(c_on,var_s2) >> s(c_on, var_s)
+
+Constraints
+-----------
+
+c_on+c_off
+
+Trace
+-----
+
+Time 1: 
+s(c_off, obj_cell_1)
+s(c_off, obj_cell_10)
+s(c_off, obj_cell_11)
+s(c_off, obj_cell_2)
+s(c_off, obj_cell_3)
+s(c_off, obj_cell_4)
+s(c_off, obj_cell_5)
+s(c_off, obj_cell_7)
+s(c_off, obj_cell_8)
+s(c_off, obj_cell_9)
+s(c_on, obj_cell_6)
+
+Time 2: 
+s(c_off, obj_cell_1)
+s(c_off, obj_cell_10)
+s(c_off, obj_cell_11)
+s(c_off, obj_cell_2)
+s(c_off, obj_cell_3)
+s(c_off, obj_cell_4)
+s(c_off, obj_cell_7)
+s(c_off, obj_cell_8)
+s(c_off, obj_cell_9)
+s(c_on, obj_cell_5)
+s(c_on, obj_cell_6)
+
+Time 3: 
+s(c_off, obj_cell_1)
+s(c_off, obj_cell_10)
+s(c_off, obj_cell_11)
+s(c_off, obj_cell_2)
+s(c_off, obj_cell_3)
+s(c_off, obj_cell_7)
+s(c_off, obj_cell_8)
+s(c_off, obj_cell_9)
+s(c_on, obj_cell_4)
+s(c_on, obj_cell_5)
+s(c_on, obj_cell_6)
+
+Time 4: 
+s(c_off, obj_cell_1)
+s(c_off, obj_cell_10)
+s(c_off, obj_cell_11)
+s(c_off, obj_cell_2)
+s(c_off, obj_cell_5)
+s(c_off, obj_cell_7)
+s(c_off, obj_cell_8)
+s(c_off, obj_cell_9)
+s(c_on, obj_cell_3)
+s(c_on, obj_cell_4)
+s(c_on, obj_cell_6)
+
+Time 5: 
+s(c_off, obj_cell_1)
+s(c_off, obj_cell_10)
+s(c_off, obj_cell_11)
+s(c_off, obj_cell_7)
+s(c_off, obj_cell_8)
+s(c_off, obj_cell_9)
+s(c_on, obj_cell_2)
+s(c_on, obj_cell_3)
+s(c_on, obj_cell_4)
+s(c_on, obj_cell_5)
+s(c_on, obj_cell_6)
+
+Time 6: 
+s(c_off, obj_cell_10)
+s(c_off, obj_cell_11)
+s(c_off, obj_cell_3)
+s(c_off, obj_cell_4)
+s(c_off, obj_cell_5)
+s(c_off, obj_cell_7)
+s(c_off, obj_cell_8)
+s(c_off, obj_cell_9)
+s(c_on, obj_cell_1)
+s(c_on, obj_cell_2)
+s(c_on, obj_cell_6)
+
+Time 7: 
+s(c_off, obj_cell_10)
+s(c_off, obj_cell_3)
+s(c_off, obj_cell_4)
+s(c_off, obj_cell_7)
+s(c_off, obj_cell_8)
+s(c_off, obj_cell_9)
+s(c_on, obj_cell_1)
+s(c_on, obj_cell_11)
+s(c_on, obj_cell_2)
+s(c_on, obj_cell_5)
+s(c_on, obj_cell_6)
+
+Time 8: 
+s(c_off, obj_cell_1)
+s(c_off, obj_cell_3)
+s(c_off, obj_cell_7)
+s(c_off, obj_cell_8)
+s(c_off, obj_cell_9)
+s(c_on, obj_cell_10)
+s(c_on, obj_cell_11)
+s(c_on, obj_cell_2)
+s(c_on, obj_cell_4)
+s(c_on, obj_cell_5)
+s(c_on, obj_cell_6)
+
+Time 9: 
+s(c_off, obj_cell_5)
+s(c_off, obj_cell_7)
+s(c_off, obj_cell_8)
+s(c_on, obj_cell_1)
+s(c_on, obj_cell_10)
+s(c_on, obj_cell_11)
+s(c_on, obj_cell_2)
+s(c_on, obj_cell_3)
+s(c_on, obj_cell_4)
+s(c_on, obj_cell_6)
+s(c_on, obj_cell_9)
+
+Time 10: 
+s(c_off, obj_cell_1)
+s(c_off, obj_cell_10)
+s(c_off, obj_cell_11)
+s(c_off, obj_cell_2)
+s(c_off, obj_cell_3)
+s(c_off, obj_cell_7)
+s(c_on, obj_cell_4)
+s(c_on, obj_cell_5)
+s(c_on, obj_cell_6)
+s(c_on, obj_cell_8)
+s(c_on, obj_cell_9)
+
+Time 11: 
+s(c_off, obj_cell_1)
+s(c_off, obj_cell_10)
+s(c_off, obj_cell_11)
+s(c_off, obj_cell_2)
+s(c_off, obj_cell_5)
+s(c_on, obj_cell_3)
+s(c_on, obj_cell_4)
+s(c_on, obj_cell_6)
+s(c_on, obj_cell_7)
+s(c_on, obj_cell_8)
+s(c_on, obj_cell_9)
+
+Time 12: 
+s(c_off, obj_cell_1)
+s(c_off, obj_cell_10)
+s(c_off, obj_cell_11)
+s(c_off, obj_cell_7)
+s(c_off, obj_cell_8)
+s(c_on, obj_cell_2)
+s(c_on, obj_cell_3)
+s(c_on, obj_cell_4)
+s(c_on, obj_cell_5)
+s(c_on, obj_cell_6)
+s(c_on, obj_cell_9)
+
+Time 13: 
+s(c_off, obj_cell_10)
+s(c_off, obj_cell_11)
+s(c_off, obj_cell_3)
+s(c_off, obj_cell_4)
+s(c_off, obj_cell_5)
+s(c_off, obj_cell_7)
+s(c_on, obj_cell_1)
+s(c_on, obj_cell_2)
+s(c_on, obj_cell_6)
+s(c_on, obj_cell_8)
+s(c_on, obj_cell_9)
+
+Time 14: 
+s(c_off, obj_cell_10)
+s(c_off, obj_cell_3)
+s(c_off, obj_cell_4)
+s(c_on, obj_cell_1)
+s(c_on, obj_cell_11)
+s(c_on, obj_cell_2)
+s(c_on, obj_cell_5)
+s(c_on, obj_cell_6)
+s(c_on, obj_cell_7)
+s(c_on, obj_cell_8)
+s(c_on, obj_cell_9)
+
+
+Statistics
+----------
+
+Num arrow rules: 0
+Num causes rules: 2
+Total body atoms: 8
+Num inits: 22
+Total cost: 32
+Total num clauses: 24
+
+
+
+Accuracy
+--------
+
+Status: correct
+
+Percentage accurate: NaN
+
+Optimization: 32
